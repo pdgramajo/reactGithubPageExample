@@ -3,13 +3,13 @@ import { Route, Switch } from "react-router-dom";
 // reactstrap components
 import { Container } from "reactstrap";
 // core components
-import AdminNavbar from "../components/Navbars/AdminNavbar";
-import AdminFooter from "../components/Footers/AdminFooter";
+import PrivateNavbar from "../components/Navbars/PrivateNavbar";
+import PrivateFooter from "../components/Footers/PrivateFooter";
 import Sidebar from "../components/Sidebar/Sidebar";
 
 import routes from "../routes";
 
-class Admin extends React.Component {
+class Private extends React.Component {
   componentDidUpdate(e) {
     document.documentElement.scrollTop = 0;
     document.scrollingElement.scrollTop = 0;
@@ -17,7 +17,7 @@ class Admin extends React.Component {
   }
   getRoutes = routes => {
     return routes.map((prop, key) => {
-      if (prop.layout === "/admin") {
+      if (prop.layout === "/private") {
         return (
           <Route
             path={prop.layout + prop.path}
@@ -49,19 +49,19 @@ class Admin extends React.Component {
           {...this.props}
           routes={routes}
           logo={{
-            innerLink: "/admin/index",
+            innerLink: "/private/index",
             imgSrc: require("../assets/img/brand/argon-react.png"),
             imgAlt: "..."
           }}
         />
         <div className="main-content" ref="mainContent">
-          <AdminNavbar
+          <PrivateNavbar
             {...this.props}
             brandText={this.getBrandText(this.props.location.pathname)}
           />
           <Switch>{this.getRoutes(routes)}</Switch>
           <Container fluid>
-            <AdminFooter />
+            <PrivateFooter />
           </Container>
         </div>
       </>
@@ -69,4 +69,4 @@ class Admin extends React.Component {
   }
 }
 
-export default Admin;
+export default Private;

@@ -4,12 +4,12 @@ import { Route, Switch } from "react-router-dom";
 import { Container, Row, Col } from "reactstrap";
 
 // core components
-import AuthNavbar from "../components/Navbars/AuthNavbar";
-import AuthFooter from "../components/Footers/AuthFooter";
+import PublicNavbar from "../components/Navbars/PublicNavbar";
+import PublicFooter from "../components/Footers/PublicFooter";
 
 import routes from "../routes";
 
-class Auth extends React.Component {
+class Public extends React.Component {
   componentDidMount() {
     document.body.classList.add("bg-default");
   }
@@ -18,7 +18,7 @@ class Auth extends React.Component {
   }
   getRoutes = routes => {
     return routes.map((prop, key) => {
-      if (prop.layout === "/auth") {
+      if (prop.layout === "/public") {
         return (
           <Route
             path={prop.layout + prop.path}
@@ -35,7 +35,7 @@ class Auth extends React.Component {
     return (
       <>
         <div className="main-content">
-          <AuthNavbar />
+          <PublicNavbar />
           <div className="header bg-gradient-info py-7 py-lg-8">
             <Container>
               <div className="header-body text-center mb-7">
@@ -73,10 +73,10 @@ class Auth extends React.Component {
             </Row>
           </Container>
         </div>
-        <AuthFooter />
+        <PublicFooter />
       </>
     );
   }
 }
 
-export default Auth;
+export default Public;
