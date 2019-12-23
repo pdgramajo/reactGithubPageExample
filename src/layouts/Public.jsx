@@ -1,7 +1,9 @@
 import React from "react";
 import { Route, Switch } from "react-router-dom";
+import { withRouter } from 'react-router';
+import { connect } from 'react-redux';
 // reactstrap components
-import { Container, Row, Col } from "reactstrap";
+import { Container, Row } from "reactstrap";
 
 // core components
 import PublicNavbar from "../components/Navbars/PublicNavbar";
@@ -37,19 +39,6 @@ class Public extends React.Component {
         <div className="main-content">
           <PublicNavbar />
           <div className="header bg-gradient-info py-7 py-lg-8">
-            <Container>
-              <div className="header-body text-center mb-7">
-                <Row className="justify-content-center">
-                  <Col lg="5" md="6">
-                    <h1 className="text-white">Welcome!</h1>
-                    <p className="text-lead text-light">
-                      Use these awesome forms to login or create new account in
-                      your project for free.
-                    </p>
-                  </Col>
-                </Row>
-              </div>
-            </Container>
             <div className="separator separator-bottom separator-skew zindex-100">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -79,4 +68,21 @@ class Public extends React.Component {
   }
 }
 
-export default Public;
+const mapStateToProps = state => {
+  return {
+    model: {
+      user: state.user.userLogged
+    }
+  }
+};
+
+const mapDispatchToProps = ({
+  user: { loginAsync },
+}) => ({
+  actions: {
+    loginAsync,
+  }
+});
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(Public),
+);
