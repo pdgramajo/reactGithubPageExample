@@ -1,36 +1,62 @@
 import React, { Component } from 'react';
 
-import { withRouter } from 'react-router';
 import { Route, Switch, Redirect } from "react-router-dom";
+import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
-
 
 import PrivateLayout from "./layouts/Private";
 import PublicLayout from "./layouts/Public";
 
 class Root extends Component {
-    render() {
+
+    getRoutesComponents() {
+
+        const { model: { user } } = this.props;
+
+        if (user) {
+
+            return (
+                <Switch>
+                    <Route path="/private" render={props => <PrivateLayout {...props} />} />
+                    <Route path="/public" render={props => <PublicLayout {...props} />} />
+                    <Redirect from="/" to="/private/dashboard" />
+                </Switch>
+            )
+        }
+
         return (
             <Switch>
-                <Route path="/private" render={props => <PrivateLayout {...props} />} />
                 <Route path="/public" render={props => <PublicLayout {...props} />} />
-                <Redirect from="/" to="/private/index" />
+                <Redirect from="/" to="/public/about" />
             </Switch>
+        )
+    }
+
+    render() {
+        return (
+            <>
+                {this.getRoutesComponents()}
+            </>
         )
     }
 }
 
-// const mapStateToProps = state => ({
-//     user: state.user.userLogged,
-//     isLogged: state.user.isLogged,
-//     error: state.error,
-// });
+const mapStateToProps = state => {
+    return {
+        model: {
+            user: state.user.userLogged
+        }
+    }
+};
 
-// const mapDispatchToProps = ({
-//     user: { loginAsync },
-// }) => ({
-//     actions: {
-//         loginAsync,
-//     }
-// });
-export default Root;
+const mapDispatchToProps = ({
+    user: { loginAsync },
+}) => ({
+    actions: {
+        loginAsync,
+    }
+});
+export default withRouter(
+    connect(mapStateToProps, mapDispatchToProps)(Root),
+);
+

@@ -1,5 +1,5 @@
 import React from "react";
-
+import { connect } from 'react-redux';
 // reactstrap components
 import {
   Button,
@@ -17,7 +17,41 @@ import {
 } from "reactstrap";
 
 class Login extends React.Component {
+  state = {
+    email: '',
+    password: '',
+    showError: false,
+    error: '',
+    isLoggingIn: false
+  }
+
+  componentDidMount() {
+    const { model: { user }, history } = this.props;
+    if (user) {
+      history.push('/');
+    }
+  }
+
+  onSubmit = (e) => {
+    e.preventDefault();
+    const { actions: { loginAsync }, history } = this.props;
+    const { email, password } = this.state;
+    this.setState({ isLoggingIn: true })
+    loginAsync({ email, password })
+      .then(() => {
+        history.push('/')
+      })
+      .catch(error => this.setState({ showError: true, error: error.message }));
+  }
+
+  onEmailChange = e => this.setState({ email: e.target.value })
+
+  onPasswordChange = e => this.setState({ password: e.target.value })
+
   render() {
+    const {
+      email, password,
+    } = this.state;
     return (
       <>
         <Col lg="5" md="7">
@@ -61,7 +95,7 @@ class Login extends React.Component {
               <div className="text-center text-muted mb-4">
                 <small>Or sign in with credentials</small>
               </div>
-              <Form role="form">
+              <Form role="form" onSubmit={this.onSubmit}>
                 <FormGroup className="mb-3">
                   <InputGroup className="input-group-alternative">
                     <InputGroupAddon addonType="prepend">
@@ -69,7 +103,7 @@ class Login extends React.Component {
                         <i className="ni ni-email-83" />
                       </InputGroupText>
                     </InputGroupAddon>
-                    <Input placeholder="Email" type="email" />
+                    <Input value={email} onChange={this.onEmailChange} type="email" placeholder="Email" />
                   </InputGroup>
                 </FormGroup>
                 <FormGroup>
@@ -79,7 +113,7 @@ class Login extends React.Component {
                         <i className="ni ni-lock-circle-open" />
                       </InputGroupText>
                     </InputGroupAddon>
-                    <Input placeholder="Password" type="password" />
+                    <Input value={password} onChange={this.onPasswordChange} type="password" placeholder="Password" />
                   </InputGroup>
                 </FormGroup>
                 <div className="custom-control custom-control-alternative custom-checkbox">
@@ -96,9 +130,7 @@ class Login extends React.Component {
                   </label>
                 </div>
                 <div className="text-center">
-                  <Button className="my-4" color="primary" type="button">
-                    Sign in
-                  </Button>
+                  <Button type="submit" color="primary" className="my-4"> Sign in</Button>
                 </div>
               </Form>
             </CardBody>
@@ -129,4 +161,21 @@ class Login extends React.Component {
   }
 }
 
-export default Login;
+const mapStateToProps = state => {
+  return {
+    model: {
+      user: state.user.userLogged,
+      isLogged: state.user.isLogged,
+    }
+  }
+};
+
+const mapDispatchToProps = ({
+  user: { loginAsync },
+}) => ({
+  actions: {
+    loginAsync,
+  }
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

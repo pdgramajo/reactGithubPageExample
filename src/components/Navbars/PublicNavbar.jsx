@@ -13,7 +13,22 @@ import {
   Col
 } from "reactstrap";
 
+import routes from '../../routes';
+const publicRoutes = routes.filter(route => route.type === 'public');
+
 class PublicNavbar extends React.Component {
+
+  getNavBarItems() {
+    return publicRoutes.map(route => (
+      <NavItem  key={route.path}>
+        <NavLink className="nav-link-icon" to={route.layout + route.path} tag={Link}>
+          <i className="ni ni-planet" />
+          <span className="nav-link-inner--text">{route.name}</span>
+        </NavLink>
+      </NavItem>
+    ))
+  };
+
   render() {
     return (
       <>
@@ -51,42 +66,7 @@ class PublicNavbar extends React.Component {
                 </Row>
               </div>
               <Nav className="ml-auto" navbar>
-                <NavItem>
-                  <NavLink className="nav-link-icon" to="/" tag={Link}>
-                    <i className="ni ni-planet" />
-                    <span className="nav-link-inner--text">Dashboard</span>
-                  </NavLink>
-                </NavItem>
-                <NavItem>
-                  <NavLink
-                    className="nav-link-icon"
-                    to="/public/register"
-                    tag={Link}
-                  >
-                    <i className="ni ni-circle-08" />
-                    <span className="nav-link-inner--text">Register</span>
-                  </NavLink>
-                </NavItem>
-                <NavItem>
-                  <NavLink
-                    className="nav-link-icon"
-                    to="/public/login"
-                    tag={Link}
-                  >
-                    <i className="ni ni-key-25" />
-                    <span className="nav-link-inner--text">Login</span>
-                  </NavLink>
-                </NavItem>
-                <NavItem>
-                  <NavLink
-                    className="nav-link-icon"
-                    to="/private/user-profile"
-                    tag={Link}
-                  >
-                    <i className="ni ni-single-02" />
-                    <span className="nav-link-inner--text">Profile</span>
-                  </NavLink>
-                </NavItem>
+                {this.getNavBarItems()}
               </Nav>
             </UncontrolledCollapse>
           </Container>

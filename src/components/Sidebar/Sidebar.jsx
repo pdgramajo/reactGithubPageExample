@@ -2,6 +2,7 @@ import React from "react";
 import { NavLink as NavLinkRRD, Link } from "react-router-dom";
 // nodejs library to set properties for components
 import { PropTypes } from "prop-types";
+import { connect } from 'react-redux';
 
 // reactstrap components
 import {
@@ -31,9 +32,15 @@ class Sidebar extends React.Component {
   state = {
     collapseOpen: false
   };
-  constructor(props) {
-    super(props);
-    this.activeRoute.bind(this);
+
+  logout() {
+    console.log('dfsghjfb kdfjh kajf glafhl');
+    const { actions: { logout }, history } = this.props;
+    logout()
+      .then(() => {
+        history.push('/public/login')
+      })
+      .catch(error => this.setState({ showError: true, error: error.message }));
   }
   // verifies if routeName is the one active (in browser input)
   activeRoute(routeName) {
@@ -157,7 +164,7 @@ class Sidebar extends React.Component {
                   <span>Support</span>
                 </DropdownItem>
                 <DropdownItem divider />
-                <DropdownItem href="#pablo" onClick={e => e.preventDefault()}>
+                <DropdownItem href="#pablo" onClick={e => { e.preventDefault(); this.logout() }}>
                   <i className="ni ni-user-run" />
                   <span>Logout</span>
                 </DropdownItem>
@@ -265,4 +272,18 @@ Sidebar.propTypes = {
   })
 };
 
-export default Sidebar;
+const mapStateToProps = state => ({
+  user: state.user.userLogged,
+  error: state.error,
+});
+
+const mapDispatchToProps = ({
+  user: { loginAsync, logout },
+}) => ({
+  actions: {
+    loginAsync,
+    logout
+  }
+});
+export default connect(mapStateToProps, mapDispatchToProps)(Sidebar);
+

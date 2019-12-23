@@ -1,7 +1,5 @@
 import React from "react";
 import { Route, Switch } from "react-router-dom";
-import { withRouter } from 'react-router';
-import { connect } from 'react-redux';
 // reactstrap components
 import { Container, Row } from "reactstrap";
 
@@ -10,7 +8,7 @@ import PublicNavbar from "../components/Navbars/PublicNavbar";
 import PublicFooter from "../components/Footers/PublicFooter";
 
 import routes from "../routes";
-
+const publicRoutes = routes.filter(route => route.type === 'public');
 class Public extends React.Component {
   componentDidMount() {
     document.body.classList.add("bg-default");
@@ -19,12 +17,12 @@ class Public extends React.Component {
     document.body.classList.remove("bg-default");
   }
   getRoutes = routes => {
-    return routes.map((prop, key) => {
-      if (prop.layout === "/public") {
+    return routes.map((route, key) => {
+      if (route.layout === "/public") {
         return (
           <Route
-            path={prop.layout + prop.path}
-            component={prop.component}
+            path={route.layout + route.path}
+            component={route.component}
             key={key}
           />
         );
@@ -58,7 +56,7 @@ class Public extends React.Component {
           {/* Page content */}
           <Container className="mt--8 pb-5">
             <Row className="justify-content-center">
-              <Switch>{this.getRoutes(routes)}</Switch>
+              <Switch>{this.getRoutes(publicRoutes)}</Switch>
             </Row>
           </Container>
         </div>
@@ -68,21 +66,5 @@ class Public extends React.Component {
   }
 }
 
-const mapStateToProps = state => {
-  return {
-    model: {
-      user: state.user.userLogged
-    }
-  }
-};
 
-const mapDispatchToProps = ({
-  user: { loginAsync },
-}) => ({
-  actions: {
-    loginAsync,
-  }
-});
-export default withRouter(
-  connect(mapStateToProps, mapDispatchToProps)(Public),
-);
+export default Public;

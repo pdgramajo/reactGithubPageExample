@@ -8,7 +8,7 @@ import PrivateFooter from "../components/Footers/PrivateFooter";
 import Sidebar from "../components/Sidebar/Sidebar";
 
 import routes from "../routes";
-
+const privateRoutes = routes.filter(route => route.type === 'private');
 class Private extends React.Component {
   componentDidUpdate(e) {
     document.documentElement.scrollTop = 0;
@@ -16,12 +16,12 @@ class Private extends React.Component {
     this.refs.mainContent.scrollTop = 0;
   }
   getRoutes = routes => {
-    return routes.map((prop, key) => {
-      if (prop.layout === "/private") {
+    return routes.map((route, key) => {
+      if (route.layout === "/private") {
         return (
           <Route
-            path={prop.layout + prop.path}
-            component={prop.component}
+            path={route.layout + route.path}
+            component={route.component}
             key={key}
           />
         );
@@ -47,7 +47,7 @@ class Private extends React.Component {
       <>
         <Sidebar
           {...this.props}
-          routes={routes}
+          routes={privateRoutes}
           logo={{
             innerLink: "/private/index",
             imgSrc: require("../assets/img/brand/argon-react.png"),
@@ -59,7 +59,7 @@ class Private extends React.Component {
             {...this.props}
             brandText={this.getBrandText(this.props.location.pathname)}
           />
-          <Switch>{this.getRoutes(routes)}</Switch>
+          <Switch>{this.getRoutes(privateRoutes)}</Switch>
           <Container fluid>
             <PrivateFooter />
           </Container>

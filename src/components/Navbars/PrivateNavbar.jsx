@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { connect } from 'react-redux';
 // reactstrap components
 import {
   DropdownMenu,
@@ -18,7 +19,16 @@ import {
   Media
 } from "reactstrap";
 
-class PrivateNavbar extends React.Component {
+class AdminNavbar extends React.Component {
+  logout() {
+    console.log('dfsghjfb kdfjh kajf glafhl');
+    const { actions: { logout }, history } = this.props;
+    logout()
+      .then(() => {
+        history.push('/public/login')
+      })
+      .catch(error => this.setState({ showError: true, error: error.message }));
+  }
   render() {
     return (
       <>
@@ -80,7 +90,7 @@ class PrivateNavbar extends React.Component {
                     <span>Support</span>
                   </DropdownItem>
                   <DropdownItem divider />
-                  <DropdownItem href="#pablo" onClick={e => e.preventDefault()}>
+                  <DropdownItem href="#pablo" onClick={e => { e.preventDefault(); this.logout() }}>
                     <i className="ni ni-user-run" />
                     <span>Logout</span>
                   </DropdownItem>
@@ -93,5 +103,17 @@ class PrivateNavbar extends React.Component {
     );
   }
 }
+const mapStateToProps = state => ({
+  user: state.user.userLogged,
+  error: state.error,
+});
 
-export default PrivateNavbar;
+const mapDispatchToProps = ({
+  user: { loginAsync, logout },
+}) => ({
+  actions: {
+    loginAsync,
+    logout
+  }
+});
+export default connect(mapStateToProps, mapDispatchToProps)(AdminNavbar);

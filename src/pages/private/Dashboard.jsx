@@ -2,7 +2,6 @@ import React from "react";
 // node.js library that concatenates classes (strings)
 import classnames from "classnames";
 // javascipt plugin for creating charts
-import Chart from "chart.js";
 // react plugin used to create charts
 import { Line, Bar } from "react-chartjs-2";
 // reactstrap components
@@ -23,13 +22,11 @@ import {
 
 // core components
 import {
-  chartOptions,
-  parseOptions,
   chartExample1,
   chartExample2
-} from "../variables/charts";
+} from "../../variables/charts";
 
-import Header from "../components/Headers/Header";
+import Header from "../../components/Headers/Header";
 
 class Index extends React.Component {
   state = {
@@ -50,11 +47,11 @@ class Index extends React.Component {
     setTimeout(() => wow(), 1000);
     // this.chartReference.update();
   };
-  componentWillMount() {
-    if (window.Chart) {
-      parseOptions(Chart, chartOptions());
-    }
-  }
+  // componentWillMount() {
+  //   if (window.Chart) {
+  //     parseOptions(Chart, chartOptions());
+  //   }
+  // }
   render() {
     return (
       <>
