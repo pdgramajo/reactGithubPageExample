@@ -16,8 +16,16 @@ export default class Helpers {
     static getImageUrl(url) {
         let image = 'https://www.achievesuccesstutoring.com/wp-content/uploads/2019/05/no-photo-icon-22.jpg-300x300.png';
         if (url && url !== '') {
-            image = `${API.BaseURL.replace('api', '')}${url}`
+            image = url.includes(`${API.BaseURL.replace('api', '')}`) ? url : `${API.BaseURL.replace('api', '')}${url}`;
         }
         return image;
+    }
+
+    static isAllowed(user, groups) {
+        if (user) {
+            const haspermission = user.securityGroup.split(',').find(role => groups.includes(role));
+            return haspermission ? true : false;
+        }
+        return false;
     }
 }

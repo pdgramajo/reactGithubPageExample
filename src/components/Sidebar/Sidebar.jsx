@@ -6,27 +6,11 @@ import { connect } from 'react-redux';
 
 // reactstrap components
 import {
-  Collapse,
-  DropdownMenu,
-  DropdownItem,
-  UncontrolledDropdown,
-  DropdownToggle,
-  Form,
-  Input,
-  InputGroupAddon,
-  InputGroupText,
-  InputGroup,
-  Media,
-  NavbarBrand,
-  Navbar,
-  NavItem,
-  NavLink,
-  Nav,
-  Container,
-  Row,
-  Col
+  Collapse, DropdownMenu, DropdownItem, UncontrolledDropdown, DropdownToggle, Form, Input,
+  InputGroupAddon, InputGroupText, InputGroup, Media, NavbarBrand, Navbar, NavItem,
+  NavLink, Nav, Container, Row, Col
 } from "reactstrap";
-
+import Helpers from '../../lib/Helpers';
 
 class Sidebar extends React.Component {
   state = {
@@ -34,7 +18,6 @@ class Sidebar extends React.Component {
   };
 
   logout() {
-    console.log('dfsghjfb kdfjh kajf glafhl');
     const { actions: { logout }, history } = this.props;
     logout()
       .then(() => {
@@ -42,51 +25,57 @@ class Sidebar extends React.Component {
       })
       .catch(error => this.setState({ showError: true, error: error.message }));
   }
-  // verifies if routeName is the one active (in browser input)
-  activeRoute(routeName) {
-    return this.props.location.pathname.indexOf(routeName) > -1 ? "active" : "";
-  }
+
   // toggles collapse between opened and closed (true/false)
   toggleCollapse = () => {
     this.setState({
       collapseOpen: !this.state.collapseOpen
     });
   };
+
   // closes the collapse
   closeCollapse = () => {
     this.setState({
       collapseOpen: false
     });
   };
+
+  getAllowedNavRoutes = () => {
+    const { model: { user }, routes } = this.props;
+    const privateRoutes = routes.filter(route => route.type === 'private');
+    const allowedNavRoutes = privateRoutes.filter(route => Helpers.isAllowed(user, route.allowedRoles))
+    return this.createLinks(allowedNavRoutes);
+  }
+
   // creates the links that appear in the left menu / Sidebar
   createLinks = routes => {
-    return routes.map((prop, key) => {
+    return routes.map((route, key) => {
       return (
         <NavItem key={key}>
           <NavLink
-            to={prop.layout + prop.path}
+            to={route.layout + route.path}
             tag={NavLinkRRD}
             onClick={this.closeCollapse}
             activeClassName="active"
           >
-            <i className={prop.icon} />
-            {prop.name}
+            <i className={route.icon} />
+            {route.name}
           </NavLink>
         </NavItem>
       );
     });
   };
   render() {
-    const { routes, logo } = this.props;
+    const { logoNavBrand, routes, model: { user } } = this.props;
     let navbarBrandProps;
-    if (logo && logo.innerLink) {
+    if (logoNavBrand && logoNavBrand.innerLink) {
       navbarBrandProps = {
-        to: logo.innerLink,
+        to: logoNavBrand.innerLink,
         tag: Link
       };
-    } else if (logo && logo.outterLink) {
+    } else if (logoNavBrand && logoNavBrand.outterLink) {
       navbarBrandProps = {
-        href: logo.outterLink,
+        href: logoNavBrand.outterLink,
         target: "_blank"
       };
     }
@@ -106,39 +95,24 @@ class Sidebar extends React.Component {
             <span className="navbar-toggler-icon" />
           </button>
           {/* Brand */}
-          {logo ? (
+          {logoNavBrand ? (
             <NavbarBrand className="pt-0" {...navbarBrandProps}>
               <img
-                alt={logo.imgAlt}
+                alt={logoNavBrand.imgAlt}
                 className="navbar-brand-img"
-                src={logo.imgSrc}
+                src={logoNavBrand.imgSrc}
               />
             </NavbarBrand>
           ) : null}
           {/* User */}
           <Nav className="align-items-center d-md-none">
             <UncontrolledDropdown nav>
-              <DropdownToggle nav className="nav-link-icon">
-                <i className="ni ni-bell-55" />
-              </DropdownToggle>
-              <DropdownMenu
-                aria-labelledby="navbar-default_dropdown_1"
-                className="dropdown-menu-arrow"
-                right
-              >
-                <DropdownItem>Action</DropdownItem>
-                <DropdownItem>Another action</DropdownItem>
-                <DropdownItem divider />
-                <DropdownItem>Something else here</DropdownItem>
-              </DropdownMenu>
-            </UncontrolledDropdown>
-            <UncontrolledDropdown nav>
               <DropdownToggle nav>
                 <Media className="align-items-center">
                   <span className="avatar avatar-sm rounded-circle">
                     <img
                       alt="..."
-                      src={require("../../assets/img/theme/team-1-800x800.jpg")}
+                      src={Helpers.getImageUrl(user.avatarURL)}
                     />
                   </span>
                 </Media>
@@ -176,17 +150,17 @@ class Sidebar extends React.Component {
             {/* Collapse header */}
             <div className="navbar-collapse-header d-md-none">
               <Row>
-                {logo ? (
+                {logoNavBrand ? (
                   <Col className="collapse-brand" xs="6">
-                    {logo.innerLink ? (
-                      <Link to={logo.innerLink}>
-                        <img alt={logo.imgAlt} src={logo.imgSrc} />
+                    {logoNavBrand.innerLink ? (
+                      <Link to={logoNavBrand.innerLink}>
+                        <img alt={logoNavBrand.imgAlt} src={logoNavBrand.imgSrc} />
                       </Link>
                     ) : (
-                      <a href={logo.outterLink}>
-                        <img alt={logo.imgAlt} src={logo.imgSrc} />
-                      </a>
-                    )}
+                        <a href={logoNavBrand.outterLink}>
+                          <img alt={logoNavBrand.imgAlt} src={logoNavBrand.imgSrc} />
+                        </a>
+                      )}
                   </Col>
                 ) : null}
                 <Col className="collapse-close" xs="6">
@@ -218,31 +192,14 @@ class Sidebar extends React.Component {
               </InputGroup>
             </Form>
             {/* Navigation */}
-            <Nav navbar>{this.createLinks(routes)}</Nav>
+            <Nav navbar>{this.getAllowedNavRoutes()}</Nav>
             {/* Divider */}
             <hr className="my-3" />
             {/* Heading */}
-            <h6 className="navbar-heading text-muted">Documentation</h6>
+            <h6 className="navbar-heading text-muted">Public pages</h6>
             {/* Navigation */}
             <Nav className="mb-md-3" navbar>
-              <NavItem>
-                <NavLink href="https://demos.creative-tim.com/argon-dashboard-react/documentation/overview?ref=adr-admin-sidebar">
-                  <i className="ni ni-spaceship" />
-                  Getting started
-                </NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink href="https://demos.creative-tim.com/argon-dashboard-react/documentation/colors?ref=adr-admin-sidebar">
-                  <i className="ni ni-palette" />
-                  Foundation
-                </NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink href="https://demos.creative-tim.com/argon-dashboard-react/documentation/alerts?ref=adr-admin-sidebar">
-                  <i className="ni ni-ui-04" />
-                  Components
-                </NavLink>
-              </NavItem>
+              {this.createLinks(routes.filter(route => route.type === 'public'))}
             </Nav>
           </Collapse>
         </Container>
@@ -258,7 +215,7 @@ Sidebar.defaultProps = {
 Sidebar.propTypes = {
   // links that will be displayed inside the component
   routes: PropTypes.arrayOf(PropTypes.object),
-  logo: PropTypes.shape({
+  logoNavBrand: PropTypes.shape({
     // innerLink is for links that will direct the user within the app
     // it will be rendered as <Link to="...">...</Link> tag
     innerLink: PropTypes.string,
@@ -272,10 +229,13 @@ Sidebar.propTypes = {
   })
 };
 
-const mapStateToProps = state => ({
-  user: state.user.userLogged,
-  error: state.error,
-});
+const mapStateToProps = state => {
+  return {
+    model: {
+      user: state.user.userLogged
+    }
+  }
+};
 
 const mapDispatchToProps = ({
   user: { loginAsync, logout },

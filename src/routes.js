@@ -37,7 +37,7 @@ var routes = [
     component: Icons,
     layout: "/private",
     type: "private",
-    allowedRoles: ['Manager', 'Admin', 'User']
+    allowedRoles: ['Manager']
   },
   {
     path: "/maps",
@@ -69,7 +69,7 @@ var routes = [
   {
     path: "/about",
     name: "About",
-    icon: "ni ni-key-25 text-info",
+    icon: "ni ni-badge text-yellow",
     component: About,
     layout: "/public",
     type: "public",
@@ -78,7 +78,7 @@ var routes = [
   {
     path: "/contact",
     name: "Contact",
-    icon: "ni ni-key-25 text-info",
+    icon: "ni ni-active-40 text-primary",
     component: Contact,
     layout: "/public",
     type: "public",
@@ -87,7 +87,7 @@ var routes = [
   {
     path: "/gallery",
     name: "Gallery",
-    icon: "ni ni-key-25 text-info",
+    icon: "ni ni-album-2 text-orange",
     component: Gallery,
     layout: "/public",
     type: "public",
@@ -114,7 +114,7 @@ var routes = [
   {
     path: "/services",
     name: "Services",
-    icon: "ni ni-key-25 text-info",
+    icon: "ni ni-briefcase-24 text-blue",
     component: Services,
     layout: "/public",
     type: "public",

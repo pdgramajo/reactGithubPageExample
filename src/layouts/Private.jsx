@@ -7,13 +7,19 @@ import PrivateNavbar from "../components/Navbars/PrivateNavbar";
 import PrivateFooter from "../components/Footers/PrivateFooter";
 import Sidebar from "../components/Sidebar/Sidebar";
 
+
 import routes from "../routes";
 const privateRoutes = routes.filter(route => route.type === 'private');
+
 class Private extends React.Component {
   componentDidUpdate(e) {
     document.documentElement.scrollTop = 0;
     document.scrollingElement.scrollTop = 0;
     this.refs.mainContent.scrollTop = 0;
+  }
+
+  getNavRoutes = () => {
+
   }
   getRoutes = routes => {
     return routes.map((route, key) => {
@@ -47,9 +53,9 @@ class Private extends React.Component {
       <>
         <Sidebar
           {...this.props}
-          routes={privateRoutes}
-          logo={{
-            innerLink: "/private/index",
+          routes={routes}
+          logoNavBrand={{
+            innerLink: "/private/dashboard",
             imgSrc: require("../assets/img/brand/argon-react.png"),
             imgAlt: "..."
           }}

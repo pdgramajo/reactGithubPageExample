@@ -18,10 +18,10 @@ import {
   Container,
   Media
 } from "reactstrap";
+import Helpers from '../../lib/Helpers';
 
 class AdminNavbar extends React.Component {
   logout() {
-    console.log('dfsghjfb kdfjh kajf glafhl');
     const { actions: { logout }, history } = this.props;
     logout()
       .then(() => {
@@ -30,6 +30,7 @@ class AdminNavbar extends React.Component {
       .catch(error => this.setState({ showError: true, error: error.message }));
   }
   render() {
+    const { model: { user } } = this.props;
     return (
       <>
         <Navbar className="navbar-top navbar-dark" expand="md" id="navbar-main">
@@ -59,12 +60,12 @@ class AdminNavbar extends React.Component {
                     <span className="avatar avatar-sm rounded-circle">
                       <img
                         alt="..."
-                        src={require("../../assets/img/theme/team-4-800x800.jpg")}
+                        src={Helpers.getImageUrl(user.avatarURL)}
                       />
                     </span>
                     <Media className="ml-2 d-none d-lg-block">
                       <span className="mb-0 text-sm font-weight-bold">
-                        Jessica Jones
+                        {user.email}
                       </span>
                     </Media>
                   </Media>
@@ -103,11 +104,14 @@ class AdminNavbar extends React.Component {
     );
   }
 }
-const mapStateToProps = state => ({
-  user: state.user.userLogged,
-  error: state.error,
-});
 
+const mapStateToProps = state => {
+  return {
+    model: {
+      user: state.user.userLogged
+    }
+  }
+};
 const mapDispatchToProps = ({
   user: { loginAsync, logout },
 }) => ({
