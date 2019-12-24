@@ -22,7 +22,7 @@ class PublicNavbar extends React.Component {
     return publicRoutes.map(route => (
       <NavItem  key={route.path}>
         <NavLink className="nav-link-icon" to={route.layout + route.path} tag={Link}>
-          <i className="ni ni-planet" />
+          <i className={route.icon} />
           <span className="nav-link-inner--text">{route.name}</span>
         </NavLink>
       </NavItem>

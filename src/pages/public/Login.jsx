@@ -13,7 +13,8 @@ import {
   InputGroupText,
   InputGroup,
   Row,
-  Col
+  Col,
+  Spinner
 } from "reactstrap";
 
 class Login extends React.Component {
@@ -36,7 +37,6 @@ class Login extends React.Component {
     e.preventDefault();
     const { actions: { loginAsync }, history } = this.props;
     const { email, password } = this.state;
-    this.setState({ isLoggingIn: true })
     loginAsync({ email, password })
       .then(() => {
         history.push('/')
@@ -50,8 +50,9 @@ class Login extends React.Component {
 
   render() {
     const {
-      email, password,
+      email, password
     } = this.state;
+    const { loading } = this.props;
     return (
       <>
         <Col lg="5" md="7">
@@ -130,7 +131,12 @@ class Login extends React.Component {
                   </label>
                 </div>
                 <div className="text-center">
-                  <Button type="submit" color="primary" className="my-4"> Sign in</Button>
+                  {
+                    loading ?
+                      <Spinner style={{ width: '3rem', height: '3rem' }} />
+                      :
+                      <Button type="submit" color="primary" className="my-4"> Sign in</Button>
+                  }
                 </div>
               </Form>
             </CardBody>
@@ -166,6 +172,7 @@ const mapStateToProps = state => {
     model: {
       user: state.user.userLogged,
       isLogged: state.user.isLogged,
+      loading: state.user.loading
     }
   }
 };

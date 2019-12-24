@@ -2,7 +2,6 @@ import React from "react";
 import { NavLink as NavLinkRRD, Link } from "react-router-dom";
 // nodejs library to set properties for components
 import { PropTypes } from "prop-types";
-import { connect } from 'react-redux';
 
 // reactstrap components
 import {
@@ -17,13 +16,9 @@ class Sidebar extends React.Component {
     collapseOpen: false
   };
 
-  logout() {
-    const { actions: { logout }, history } = this.props;
+  prevLogout() {
+    const { logout } = this.props;
     logout()
-      .then(() => {
-        history.push('/public/login')
-      })
-      .catch(error => this.setState({ showError: true, error: error.message }));
   }
 
   // toggles collapse between opened and closed (true/false)
@@ -41,7 +36,7 @@ class Sidebar extends React.Component {
   };
 
   getAllowedNavRoutes = () => {
-    const { model: { user }, routes } = this.props;
+    const { user, routes } = this.props;
     const privateRoutes = routes.filter(route => route.type === 'private');
     const allowedNavRoutes = privateRoutes.filter(route => Helpers.isAllowed(user, route.allowedRoles))
     return this.createLinks(allowedNavRoutes);
@@ -66,7 +61,7 @@ class Sidebar extends React.Component {
     });
   };
   render() {
-    const { logoNavBrand, routes, model: { user } } = this.props;
+    const { logoNavBrand, routes, user } = this.props;
     let navbarBrandProps;
     if (logoNavBrand && logoNavBrand.innerLink) {
       navbarBrandProps = {
@@ -138,7 +133,7 @@ class Sidebar extends React.Component {
                   <span>Support</span>
                 </DropdownItem>
                 <DropdownItem divider />
-                <DropdownItem href="#pablo" onClick={e => { e.preventDefault(); this.logout() }}>
+                <DropdownItem href="#pablo" onClick={e => { e.preventDefault(); this.prevLogout() }}>
                   <i className="ni ni-user-run" />
                   <span>Logout</span>
                 </DropdownItem>
@@ -215,6 +210,7 @@ Sidebar.defaultProps = {
 Sidebar.propTypes = {
   // links that will be displayed inside the component
   routes: PropTypes.arrayOf(PropTypes.object),
+  logout: PropTypes.func,
   logoNavBrand: PropTypes.shape({
     // innerLink is for links that will direct the user within the app
     // it will be rendered as <Link to="...">...</Link> tag
@@ -229,21 +225,6 @@ Sidebar.propTypes = {
   })
 };
 
-const mapStateToProps = state => {
-  return {
-    model: {
-      user: state.user.userLogged
-    }
-  }
-};
 
-const mapDispatchToProps = ({
-  user: { loginAsync, logout },
-}) => ({
-  actions: {
-    loginAsync,
-    logout
-  }
-});
-export default connect(mapStateToProps, mapDispatchToProps)(Sidebar);
+export default Sidebar;
 

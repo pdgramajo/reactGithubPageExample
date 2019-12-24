@@ -6,6 +6,7 @@ import { Container, Row } from "reactstrap";
 // core components
 import PublicNavbar from "../components/Navbars/PublicNavbar";
 import PublicFooter from "../components/Footers/PublicFooter";
+import PageNotFound from '../pages/public/PageNotFound';
 
 import routes from "../routes";
 const publicRoutes = routes.filter(route => route.type === 'public');
@@ -56,7 +57,10 @@ class Public extends React.Component {
           {/* Page content */}
           <Container className="mt--8 pb-5">
             <Row className="justify-content-center">
-              <Switch>{this.getRoutes(publicRoutes)}</Switch>
+              <Switch>
+                {this.getRoutes(publicRoutes)}
+                <Route component={PageNotFound} />
+                </Switch>
             </Row>
           </Container>
         </div>

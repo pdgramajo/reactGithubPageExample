@@ -10,11 +10,8 @@ import PublicLayout from "./layouts/Public";
 class Root extends Component {
 
     getRoutesComponents() {
-
         const { model: { user } } = this.props;
-
         if (user) {
-
             return (
                 <Switch>
                     <Route path="/private" render={props => <PrivateLayout {...props} />} />
@@ -23,7 +20,6 @@ class Root extends Component {
                 </Switch>
             )
         }
-
         return (
             <Switch>
                 <Route path="/public" render={props => <PublicLayout {...props} />} />

@@ -7,7 +7,8 @@ const user = {
     userLogged: Authentication.getUser(),
     allUsers: [],
     userFound: {},
-    isLogged: false
+    isLogged: false,
+    loading: false
   },
   reducers: {
     add: (state, newUser) => {
@@ -36,21 +37,29 @@ const user = {
         userFound: userFound
       }
     },
+    setLoading: (state, isloading) => {
+      return {
+        ...state,
+        loading: isloading
+      }
+    }
   },
   effects: dispatch => ({
     async loginAsync({ email, password, token }) {
+      dispatch.user.setLoading(true);
       try {
         let userToken;
         if (token) {
           userToken = token;
         } else {
           const response = await Axios.post(`${API.BaseURL}/Accounts/Login`, { email, password });
+
           userToken = response.data.token;
         }
 
         Authentication.setJWTCookie(userToken);
         dispatch.user.add(Authentication.getUser());
-
+        dispatch.user.setLoading(false);
         return Promise.resolve();
       } catch (error) {
         if (error.response && error.response.status === 401) {

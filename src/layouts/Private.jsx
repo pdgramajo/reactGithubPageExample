@@ -2,32 +2,35 @@ import React from "react";
 import { Route, Switch } from "react-router-dom";
 // reactstrap components
 import { Container } from "reactstrap";
+import { connect } from 'react-redux';
 // core components
 import PrivateNavbar from "../components/Navbars/PrivateNavbar";
 import PrivateFooter from "../components/Footers/PrivateFooter";
+import Unauthorized from '../pages/public/Unauthorized';
+import PageNotFound from '../pages/public/PageNotFound';
 import Sidebar from "../components/Sidebar/Sidebar";
 
-
 import routes from "../routes";
+import Helpers from "../lib/Helpers";
 const privateRoutes = routes.filter(route => route.type === 'private');
 
+
 class Private extends React.Component {
-  componentDidUpdate(e) {
-    document.documentElement.scrollTop = 0;
-    document.scrollingElement.scrollTop = 0;
-    this.refs.mainContent.scrollTop = 0;
-  }
 
-  getNavRoutes = () => {
-
-  }
   getRoutes = routes => {
+    const { model: { user } } = this.props;
     return routes.map((route, key) => {
       if (route.layout === "/private") {
-        return (
+        return (Helpers.isAllowed(user, route.allowedRoles) ?
           <Route
             path={route.layout + route.path}
             component={route.component}
+            key={key}
+          />
+          :
+          <Route
+            path={route.layout + route.path}
+            component={Unauthorized}
             key={key}
           />
         );
@@ -49,23 +52,29 @@ class Private extends React.Component {
     return "Brand";
   };
   render() {
+    const { model: { user }, actions: { logout } } = this.props;
     return (
       <>
         <Sidebar
-          {...this.props}
           routes={routes}
           logoNavBrand={{
             innerLink: "/private/dashboard",
             imgSrc: require("../assets/img/brand/argon-react.png"),
             imgAlt: "..."
           }}
+          logout={logout}
+          user={user}
         />
         <div className="main-content" ref="mainContent">
           <PrivateNavbar
-            {...this.props}
+            user={user}
+            logout={logout}
             brandText={this.getBrandText(this.props.location.pathname)}
           />
-          <Switch>{this.getRoutes(privateRoutes)}</Switch>
+          <Switch>
+            {this.getRoutes(privateRoutes)}
+            <Route component={PageNotFound} />
+          </Switch>
           <Container fluid>
             <PrivateFooter />
           </Container>
@@ -75,4 +84,21 @@ class Private extends React.Component {
   }
 }
 
-export default Private;
+
+
+const mapStateToProps = state => {
+  return {
+    model: {
+      user: state.user.userLogged
+    }
+  }
+};
+
+const mapDispatchToProps = ({
+  user: { logout },
+}) => ({
+  actions: {
+    logout
+  }
+});
+export default connect(mapStateToProps, mapDispatchToProps)(Private);
