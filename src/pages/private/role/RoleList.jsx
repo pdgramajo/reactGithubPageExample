@@ -119,17 +119,17 @@ class RoleList extends Component {
             <>
                 <Header>
                     <Col>
-                        <Card className="card-stats mb-4 mb-xl-0">
-                            <CardBody>
-                                <Row>
-                                    <Col>
-                                        <HasPermission user={userLogged} allowedRoles="Manager">
+                        <HasPermission user={userLogged} allowedRoles="Manager">
+                            <Card className="card-stats mb-4 mb-xl-0">
+                                <CardBody>
+                                    <Row>
+                                        <Col>
                                             <Button className='float-right' onClick={() => this.toggle()} size="sm" outline color="info">Create new role </Button>
-                                        </HasPermission>
-                                    </Col>
-                                </Row>
-                            </CardBody>
-                        </Card>
+                                        </Col>
+                                    </Row>
+                                </CardBody>
+                            </Card>
+                        </HasPermission>
                     </Col>
                 </Header>
                 <Container className="mt--7" fluid>

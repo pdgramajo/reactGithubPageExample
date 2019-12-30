@@ -70,17 +70,17 @@ class UsersList extends Component {
             <>
                 <Header>
                     <Col xs="12">
-                        <Card className="card-stats mb-4 mb-xl-0">
-                            <CardBody>
-                                <Row>
-                                    <Col>
-                                        <HasPermission user={userLogged} allowedRoles="Manager">
+                        <HasPermission user={userLogged} allowedRoles="Manager">
+                            <Card className="card-stats mb-4 mb-xl-0">
+                                <CardBody>
+                                    <Row>
+                                        <Col>
                                             <Link to="/users/new" className="btn btn-outline-info float-right">Create new User</Link>
-                                        </HasPermission>
-                                    </Col>
-                                </Row>
-                            </CardBody>
-                        </Card>
+                                        </Col>
+                                    </Row>
+                                </CardBody>
+                            </Card>
+                        </HasPermission>
                     </Col>
                 </Header>
                 <Container className="mt--7" fluid>
