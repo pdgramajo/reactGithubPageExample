@@ -5,10 +5,11 @@ import Authentication from '../lib/Authentication';
 const user = {
   state: {
     userLogged: Authentication.getUser(),
-    allUsers: [],
+    paginatedUsers: [],
     userFound: {},
     isLogged: false,
-    loading: false
+    loading: false,
+    pagination: {}
   },
   reducers: {
     add: (state, newUser) => {
@@ -25,10 +26,16 @@ const user = {
         isLogged: false
       }
     },
-    getAllUsers: (state, allUsers) => {
+    getAllUsers: (state, paginatedUsers) => {
       return {
         ...state,
-        allUsers: allUsers
+        paginatedUsers: paginatedUsers
+      }
+    },
+    pagination: (state, data) => {
+      return {
+        ...state,
+        pagination: data
       }
     },
     getUserById: (state, userFound) => {
@@ -95,11 +102,11 @@ const user = {
         return Promise.reject(new Error('Error adding Files.'));
       }
     },
-    async getAllUsersAsync() {
+    async getAllUsersAsync(page) {
       try {
 
-        const response = await Axios.get(`${API.BaseURL}/Users`, { headers: { Authorization: Authentication.bearerToken() } })
-
+        const response = await Axios.get(`${API.BaseURL}/Users?PageNumber=${page}&PageSize=2`, { headers: { Authorization: Authentication.bearerToken() } });
+        dispatch.user.pagination(JSON.parse(response.headers['x-pagination']));
         dispatch.user.getAllUsers(response.data);
 
         return Promise.resolve(response.data);

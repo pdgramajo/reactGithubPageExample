@@ -15,6 +15,7 @@ import Profile from "./pages/private/Profile";
 import Maps from "./pages/private/Maps";
 import Tables from "./pages/private/Tables";
 import Icons from "./pages/private/Icons";
+import UserList from "./pages/private/user/UserList";
 
 
 import Register from "./pages/public/Register";
@@ -62,6 +63,15 @@ var routes = [
     name: "Tables",
     icon: "ni ni-bullet-list-67 text-red",
     component: Tables,
+    layout: "/private",
+    type: "private",
+    allowedRoles: ['Manager', 'Admin', 'User']
+  },
+  {
+    path: "/users",
+    name: "Users List",
+    icon: "ni ni-bullet-list-67 text-red",
+    component: UserList,
     layout: "/private",
     type: "private",
     allowedRoles: ['Manager', 'Admin', 'User']
