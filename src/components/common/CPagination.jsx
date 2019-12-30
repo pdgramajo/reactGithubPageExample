@@ -13,14 +13,11 @@ const CPagination = ({ model: { CurrentPage, TotalPages, HasNext, HasPrevious },
             linkList[index] = index + 1;
         }
 
-        const prev = (CurrentPage === 1 || CurrentPage === 2) ? '1' : CurrentPage - 1;
-        const next = (CurrentPage === 1 || CurrentPage === 2) ? '3' : CurrentPage + 1;
-        
-        var resultado = linkList.filter(item => prev === item || CurrentPage === item || next === item);
+        // const prev = (CurrentPage === 1 || CurrentPage === 2) ? '1' : CurrentPage - 1;
+        // const next = (CurrentPage === 1 || CurrentPage === 2) ? '3' : CurrentPage + 1;
 
-        console.log('prev', prev);
-        console.log('nex', next);
-        console.log('resultado', resultado);
+        // var resultado = linkList.filter(item => prev === item || CurrentPage === item || next === item);
+
 
         return linkList.map(pag =>
             <PaginationItem key={'pik' + pag} className={(CurrentPage === pag ? "active" : "")}>
@@ -48,11 +45,9 @@ const CPagination = ({ model: { CurrentPage, TotalPages, HasNext, HasPrevious },
                         <span className="sr-only">Previous</span>
                     </PaginationLink>
                 </PaginationItem>
-                {"..."}
                 {
                     getPagesLink()
                 }
-                {"..."}
                 <PaginationItem className={(!HasNext ? "disabled" : "")}>
                     <PaginationLink
                         onClick={e => { e.preventDefault(); setPage(CurrentPage + 1) }}

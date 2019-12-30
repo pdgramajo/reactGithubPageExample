@@ -4,14 +4,15 @@ import Authentication from '../lib/Authentication';
 
 export default {
     state: {
-        allRoles: [],
-        usersByRole: []
+        paginatedRoles: [],
+        usersByRole: [],
+        pagination: {}
     },
     reducers: {
         getAllRoles: (state, data) => {
             return {
                 ...state,
-                allRoles: data
+                paginatedRoles: data
             }
         },
         getAllUsersByRoleId: (state, data) => {
@@ -20,11 +21,19 @@ export default {
                 usersByRole: data
             }
         },
+        pagination: (state, data) => {
+            return {
+                ...state,
+                pagination: data
+            }
+        },
     },
     effects: dispatch => ({
-        async getAllRolesAsync() {
+        async getAllRolesAsync(page) {
             try {
-                const response = await Axios.get(`${API.BaseURL}/Roles`, { headers: { Authorization: Authentication.bearerToken() } })
+                const pageNumber = page ? page : 1;
+                const response = await Axios.get(`${API.BaseURL}/Roles?PageNumber=${pageNumber}&PageSize=4`, { headers: { Authorization: Authentication.bearerToken() } })
+                dispatch.role.pagination(JSON.parse(response.headers['x-pagination']));
                 dispatch.role.getAllRoles(response.data);
                 return Promise.resolve(response.data);
             } catch (error) {

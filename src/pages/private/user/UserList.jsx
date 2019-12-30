@@ -5,9 +5,10 @@ import { connect } from 'react-redux';
 import {
     Table, Container, Row, Col,
     Button, Modal, ModalHeader, ModalBody, ModalFooter, Spinner,
-    Badge, Card, CardHeader, CardFooter, DropdownMenu,
+    Badge, Card, CardHeader, CardFooter, DropdownMenu, CardBody,
     DropdownItem, UncontrolledDropdown, DropdownToggle, Media
 } from 'reactstrap';
+
 //import CustomTypes from '../../../../lib/custom-types';
 // import { API } from '../../../../config';
 
@@ -29,16 +30,8 @@ class UsersList extends Component {
             model: { userLogged }
         } = this.props;
         getUserByIdAsync(userLogged.userId);
-        getAllUsersAsync(1);
+        getAllUsersAsync();
     }
-
-    // getImageUrl(url) {
-    //     let image = 'https://www.achievesuccesstutoring.com/wp-content/uploads/2019/05/no-photo-icon-22.jpg-300x300.png';
-    //     if (url && url !== '') {
-    //         image = `${API.BaseURL.replace('api', '')}${url}`
-    //     }
-    //     return image;
-    // }
 
     setPage(page) {
         const {
@@ -75,7 +68,21 @@ class UsersList extends Component {
         const { modal, userToDelete, isLoading } = this.state;
         return (
             <>
-                <Header />
+                <Header>
+                    <Col xs="12">
+                        <Card className="card-stats mb-4 mb-xl-0">
+                            <CardBody>
+                                <Row>
+                                    <Col>
+                                        <HasPermission user={userLogged} allowedRoles="Manager">
+                                            <Link to="/users/new" className="btn btn-outline-info float-right">Create new User</Link>
+                                        </HasPermission>
+                                    </Col>
+                                </Row>
+                            </CardBody>
+                        </Card>
+                    </Col>
+                </Header>
                 <Container className="mt--7" fluid>
                     {/* Table */}
                     <Row>
@@ -143,19 +150,23 @@ class UsersList extends Component {
                                                                         onClick={e => e.preventDefault()}
                                                                     >
                                                                         Details
-                                                                </DropdownItem>
-                                                                    <DropdownItem
-                                                                        href="#pablo"
-                                                                        onClick={e => e.preventDefault()}
-                                                                    >
-                                                                        Edit
-                                                                </DropdownItem>
-                                                                    <DropdownItem
-                                                                        href="#pablo"
-                                                                        onClick={e => { e.preventDefault(); this.toggle(user) }}
-                                                                    >
-                                                                        Delete
-                                                                </DropdownItem>
+                                                                    </DropdownItem>
+                                                                    <HasPermission user={userLogged} allowedRoles="Admin,Manager">
+                                                                        <DropdownItem
+                                                                            href="#pablo"
+                                                                            onClick={e => e.preventDefault()}
+                                                                        >
+                                                                            Edit
+                                                                    </DropdownItem>
+                                                                    </HasPermission>
+                                                                    <HasPermission user={userLogged} allowedRoles="Manager">
+                                                                        <DropdownItem
+                                                                            href="#pablo"
+                                                                            onClick={e => { e.preventDefault(); this.toggle(user) }}
+                                                                        >
+                                                                            Delete
+                                                                    </DropdownItem>
+                                                                    </HasPermission>
                                                                 </DropdownMenu>
                                                             </UncontrolledDropdown>
                                                         </td>
@@ -177,13 +188,7 @@ class UsersList extends Component {
                             </Card>
                         </div>
                     </Row>
-                    <Row>
-                        <Col xs="12">
-                            <HasPermission user={userLogged} allowedRoles="Manager">
-                                <Link to="/users/new" className="btn btn-outline-info float-right">Create new User</Link>
-                            </HasPermission>
-                        </Col>
-                    </Row>
+
                     {/* <Row>
                         <Col xs="12">
                             <Table hover responsive>

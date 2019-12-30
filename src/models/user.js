@@ -104,8 +104,8 @@ const user = {
     },
     async getAllUsersAsync(page) {
       try {
-
-        const response = await Axios.get(`${API.BaseURL}/Users?PageNumber=${page}&PageSize=2`, { headers: { Authorization: Authentication.bearerToken() } });
+        const pageNumber = page ? page : 1;
+        const response = await Axios.get(`${API.BaseURL}/Users?PageNumber=${pageNumber}&PageSize=4`, { headers: { Authorization: Authentication.bearerToken() } });
         dispatch.user.pagination(JSON.parse(response.headers['x-pagination']));
         dispatch.user.getAllUsers(response.data);
 
