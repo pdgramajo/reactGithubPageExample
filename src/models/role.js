@@ -6,13 +6,20 @@ export default {
     state: {
         paginatedRoles: [],
         usersByRole: [],
-        pagination: {}
+        pagination: {},
+        allRolesForSelect: []
     },
     reducers: {
         getAllRoles: (state, data) => {
             return {
                 ...state,
                 paginatedRoles: data
+            }
+        },
+        getAllRolesForSelect: (state, data) => {
+            return {
+                ...state,
+                allRolesForSelect: data
             }
         },
         getAllUsersByRoleId: (state, data) => {
@@ -35,6 +42,15 @@ export default {
                 const response = await Axios.get(`${API.BaseURL}/Roles?PageNumber=${pageNumber}&PageSize=4`, { headers: { Authorization: Authentication.bearerToken() } })
                 dispatch.role.pagination(JSON.parse(response.headers['x-pagination']));
                 dispatch.role.getAllRoles(response.data);
+                return Promise.resolve(response.data);
+            } catch (error) {
+                return Promise.reject(new Error('Error fetching data.'));
+            }
+        },
+        async getAllRolesForSelectAsync() {
+            try {
+                const response = await Axios.get(`${API.BaseURL}/Roles`, { headers: { Authorization: Authentication.bearerToken() } })
+                dispatch.role.getAllRolesForSelect(response.data);
                 return Promise.resolve(response.data);
             } catch (error) {
                 return Promise.reject(new Error('Error fetching data.'));

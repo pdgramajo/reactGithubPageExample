@@ -16,6 +16,8 @@ import Maps from "./pages/private/Maps";
 import Tables from "./pages/private/Tables";
 import Icons from "./pages/private/Icons";
 import UserList from "./pages/private/user/UserList";
+import NewUser from "./pages/private/user/NewUser";
+import EditUser from "./pages/private/user/EditUser";
 import RoleList from "./pages/private/role/RoleList";
 
 
@@ -30,6 +32,7 @@ var routes = [
     component: Dashboard,
     layout: "/private",
     type: "private",
+    showInNavBar: true,
     allowedRoles: ['Manager', 'Admin', 'User']
   },
   {
@@ -39,6 +42,7 @@ var routes = [
     component: Icons,
     layout: "/private",
     type: "private",
+    showInNavBar: true,
     allowedRoles: ['Manager']
   },
   {
@@ -48,6 +52,7 @@ var routes = [
     component: Maps,
     layout: "/private",
     type: "private",
+    showInNavBar: true,
     allowedRoles: ['Manager', 'Admin', 'User']
   },
   {
@@ -57,6 +62,7 @@ var routes = [
     component: Profile,
     layout: "/private",
     type: "private",
+    showInNavBar: true,
     allowedRoles: ['Manager', 'Admin', 'User']
   },
   {
@@ -66,6 +72,7 @@ var routes = [
     component: Tables,
     layout: "/private",
     type: "private",
+    showInNavBar: true,
     allowedRoles: ['Manager', 'Admin', 'User']
   },
   {
@@ -75,7 +82,28 @@ var routes = [
     component: UserList,
     layout: "/private",
     type: "private",
+    showInNavBar: true,
     allowedRoles: ['Manager', 'Admin', 'User']
+  },
+  {
+    path: "/users/new",
+    name: "New User",
+    icon: "ni ni-bullet-list-67 text-red",
+    component: NewUser,
+    layout: "/private",
+    type: "private",
+    showInNavBar: false,
+    allowedRoles: ['Manager', 'Admin']
+  },
+  {
+    path: "/users/:id/edit",
+    name: "Edit User",
+    icon: "ni ni-bullet-list-67 text-red",
+    component: EditUser,
+    layout: "/private",
+    type: "private",
+    showInNavBar: false,
+    allowedRoles: ['Manager', 'Admin']
   },
   {
     path: "/roles",
@@ -84,6 +112,7 @@ var routes = [
     component: RoleList,
     layout: "/private",
     type: "private",
+    showInNavBar: true,
     allowedRoles: ['Manager', 'Admin', 'User']
   },
   {
@@ -93,6 +122,7 @@ var routes = [
     component: About,
     layout: "/public",
     type: "public",
+    showInNavBar: true,
     allowedRoles: ['Manager', 'Admin', 'User']
   },
   {
@@ -102,6 +132,7 @@ var routes = [
     component: Contact,
     layout: "/public",
     type: "public",
+    showInNavBar: true,
     allowedRoles: ['Manager', 'Admin', 'User']
   },
   {
@@ -111,6 +142,7 @@ var routes = [
     component: Gallery,
     layout: "/public",
     type: "public",
+    showInNavBar: true,
     allowedRoles: ['Manager', 'Admin', 'User']
   },
   {
@@ -120,6 +152,7 @@ var routes = [
     component: Login,
     layout: "/public",
     type: "public",
+    showInNavBar: true,
     allowedRoles: ['Manager', 'Admin', 'User']
   },
   {
@@ -129,6 +162,7 @@ var routes = [
     component: PageNotFound,
     layout: "/public",
     type: "",
+    showInNavBar: true,
     allowedRoles: ['Manager', 'Admin', 'User']
   },
   {
@@ -138,6 +172,7 @@ var routes = [
     component: Services,
     layout: "/public",
     type: "public",
+    showInNavBar: true,
     allowedRoles: ['Manager', 'Admin', 'User']
   },
   {
@@ -147,6 +182,7 @@ var routes = [
     component: Unauthorized,
     layout: "/public",
     type: "",
+    showInNavBar: true,
     allowedRoles: ['Manager', 'Admin', 'User']
   },
   {
@@ -156,6 +192,7 @@ var routes = [
     component: Register,
     layout: "/public",
     type: "public",
+    showInNavBar: true,
     allowedRoles: ['Manager', 'Admin', 'User']
   }
 ];

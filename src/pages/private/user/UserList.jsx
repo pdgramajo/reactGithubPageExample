@@ -63,6 +63,11 @@ class UsersList extends Component {
                     );
             })
     }
+    goToEdit(id) {
+        //e.preventDefault();
+        const { history } = this.props;
+        history.push(`/users/new`);
+    }
     render() {
         const { model: { paginatedUsers, userLogged, pagination } } = this.props;
         const { modal, userToDelete, isLoading } = this.state;
@@ -75,7 +80,7 @@ class UsersList extends Component {
                                 <CardBody>
                                     <Row>
                                         <Col>
-                                            <Link to="/users/new" className="btn btn-outline-info float-right">Create new User</Link>
+                                            <Link to="/users/new" className="btn btn-default float-right">Create new User</Link>
                                         </Col>
                                     </Row>
                                 </CardBody>
@@ -136,36 +141,27 @@ class UsersList extends Component {
                                                             <UncontrolledDropdown>
                                                                 <DropdownToggle
                                                                     className="btn-icon-only text-light"
-                                                                    href="#pablo"
                                                                     role="button"
                                                                     size="sm"
                                                                     color=""
-                                                                    onClick={e => e.preventDefault()}
                                                                 >
                                                                     <i className="fas fa-ellipsis-v" />
                                                                 </DropdownToggle>
                                                                 <DropdownMenu className="dropdown-menu-arrow" right>
-                                                                    <DropdownItem
-                                                                        href="#pablo"
-                                                                        onClick={e => e.preventDefault()}
-                                                                    >
-                                                                        Details
+                                                                    <DropdownItem to={`/private/users/${user.id}/details`} tag={Link}>
+                                                                        <span>Details</span>
                                                                     </DropdownItem>
                                                                     <HasPermission user={userLogged} allowedRoles="Admin,Manager">
-                                                                        <DropdownItem
-                                                                            href="#pablo"
-                                                                            onClick={e => e.preventDefault()}
-                                                                        >
-                                                                            Edit
-                                                                    </DropdownItem>
+                                                                        <DropdownItem to={`/private/users/${user.id}/edit`} tag={Link}>
+                                                                            <span>Edit</span>
+                                                                        </DropdownItem>
                                                                     </HasPermission>
                                                                     <HasPermission user={userLogged} allowedRoles="Manager">
                                                                         <DropdownItem
-                                                                            href="#pablo"
                                                                             onClick={e => { e.preventDefault(); this.toggle(user) }}
                                                                         >
                                                                             Delete
-                                                                    </DropdownItem>
+                                                                        </DropdownItem>
                                                                     </HasPermission>
                                                                 </DropdownMenu>
                                                             </UncontrolledDropdown>

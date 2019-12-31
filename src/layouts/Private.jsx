@@ -24,12 +24,14 @@ class Private extends React.Component {
         return (Helpers.isAllowed(user, route.allowedRoles) ?
           <Route
             path={route.layout + route.path}
+            exact
             component={route.component}
             key={key}
           />
           :
           <Route
             path={route.layout + route.path}
+            exact
             component={Unauthorized}
             key={key}
           />
