@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 
 import PrivateLayout from "./layouts/Private";
 import PublicLayout from "./layouts/Public";
+import Loading from './components/common/Loading';
 
 class Root extends Component {
 
@@ -29,8 +30,13 @@ class Root extends Component {
     }
 
     render() {
+        const { model: { isLoading } } = this.props;
         return (
             <>
+                {
+                    isLoading &&
+                    <Loading />
+                }
                 {this.getRoutesComponents()}
             </>
         )
@@ -40,7 +46,8 @@ class Root extends Component {
 const mapStateToProps = state => {
     return {
         model: {
-            user: state.user.userLogged
+            user: state.user.userLogged,
+            isLoading: state.loader.loading
         }
     }
 };

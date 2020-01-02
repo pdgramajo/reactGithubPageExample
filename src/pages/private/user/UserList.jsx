@@ -25,11 +25,7 @@ class UsersList extends Component {
         isLoading: false
     }
     async componentDidMount() {
-        const {
-            actions: { getAllUsersAsync, getUserByIdAsync },
-            model: { userLogged }
-        } = this.props;
-        getUserByIdAsync(userLogged.userId);
+        const { actions: { getAllUsersAsync } } = this.props;
         getAllUsersAsync();
     }
 
@@ -63,11 +59,6 @@ class UsersList extends Component {
                     );
             })
     }
-    goToEdit(id) {
-        //e.preventDefault();
-        const { history } = this.props;
-        history.push(`/users/new`);
-    }
     render() {
         const { model: { paginatedUsers, userLogged, pagination } } = this.props;
         const { modal, userToDelete, isLoading } = this.state;
@@ -80,7 +71,7 @@ class UsersList extends Component {
                                 <CardBody>
                                     <Row>
                                         <Col>
-                                            <Link to="/users/new" className="btn btn-default float-right">Create new User</Link>
+                                            <Link to="/private/users/new" className="btn btn-default float-right">Create new User</Link>
                                         </Col>
                                     </Row>
                                 </CardBody>

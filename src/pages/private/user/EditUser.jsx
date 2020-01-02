@@ -84,7 +84,7 @@ const mapStateToProps = state => {
         model: {
             userFound: state.user.userFound,
             userLogged: state.user.userLogged,
-            roles: state.role.allRoles
+            roles: state.role.allRolesForSelect
         }
     }
 };

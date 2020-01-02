@@ -12,6 +12,7 @@ import {
 } from "reactstrap";
 
 import Helpers from '../../lib/Helpers';
+import ImageItem from '../common/ImageItem';
 
 class UserForm extends Component {
     state = {
@@ -126,7 +127,7 @@ class UserForm extends Component {
 
     onEmailChange = e => {
         let data = e.target.value;
-        console.log('onEmailChange', data);
+        console.log(data);
         this.setState(prevState => ({
             user: {
                 ...prevState.user,
@@ -221,12 +222,16 @@ class UserForm extends Component {
                 <CardHeader className="bg-white border-0">
                     <Row className="align-items-center">
                         <Col xs="8">
-                            <h3 className="mb-0">My account</h3>
+                            <h3 className="mb-0">
+                                {
+                                    isEditing ? 'Edit User' : 'Create User'
+                                }
+                            </h3>
                         </Col>
                         <Col className="text-right" xs="4">
                             <Button
                                 color="default"
-                                
+
                                 onClick={this.onValidateSubmit}
                             >
                                 Save
@@ -250,10 +255,10 @@ class UserForm extends Component {
                                             Username
                                 </label>
                                         <Input
-                                            defaultValue="lucky.jesse"
                                             id="input-username"
                                             placeholder="Username"
                                             type="text"
+                                            disabled
                                         />
                                     </FormGroup>
                                 </Col>
@@ -267,12 +272,11 @@ class UserForm extends Component {
                                 </label>
                                         <Input
                                             id="input-email"
-                                            name="email"
                                             placeholder="example@example.com"
                                             onChange={this.onEmailChange}
                                             value={email || ''}
                                             invalid={!emailIsValid}
-                                            type="email"
+                                            type="text"
                                         />
                                         <FormFeedback>Email is required</FormFeedback>
                                     </FormGroup>
@@ -321,7 +325,7 @@ class UserForm extends Component {
                                             <Input
                                                 name="confirmPassword"
                                                 id="input-confirm-password"
-                                                placeholder="confirm password"
+                                                placeholder="Confirm your password"
                                                 type="password"
                                                 onChange={this.onConfirmPasswordChange}
                                                 invalid={!confirmPasswordIsValid}
@@ -375,7 +379,7 @@ class UserForm extends Component {
                                 </label>
                                         <Input
                                             id="input-phone"
-                                            placeholder="354956648"
+                                            placeholder="Write your phone number"
                                             onChange={this.onPhoneNumberChange}
                                             value={phoneNumber || ''}
                                             type="text"
@@ -384,34 +388,30 @@ class UserForm extends Component {
                                 </Col>
                             </Row>
                             <Row>
-                                <Col md="12">
-                                    {
-                                        (isEditing && !addNewFile && avatarUrl !== '') ?
-                                            <div className="card-profile-image">
-                                                <a href="#pablo" onClick={e => e.preventDefault()}>
-                                                    <img
-                                                        alt="..."
-                                                        className="rounded-circle"
-                                                        src={require("../../assets/img/theme/team-4-800x800.jpg")}
-                                                    />
-                                                </a>
-                                            </div>
-                                            :
-                                            <FormGroup>
-                                                <label
-                                                    className="form-control-label"
-                                                    htmlFor="input-img"
-                                                >
-                                                    Avatar
+                                <Col md="6">
+
+                                    <FormGroup>
+                                        <label
+                                            className="form-control-label"
+                                            htmlFor="input-img"
+                                        >
+                                            Avatar
                                         </label>
+                                        {
+                                            (isEditing && !addNewFile && avatarUrl !== '') ?
+                                                <ImageItem
+                                                    imageURL={avatarUrl}
+                                                    handlerDelete={this.onHandleDeletePhoto}
+                                                />
+                                                :
                                                 <Input
                                                     name="file"
                                                     id="input-img"
                                                     type="file"
                                                     onChange={this.onFileChange}
                                                 />
-                                            </FormGroup>
-                                    }
+                                        }
+                                    </FormGroup>
                                 </Col>
                             </Row>
                         </div>
