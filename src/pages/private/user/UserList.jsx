@@ -93,7 +93,6 @@ class UsersList extends Component {
                                             <th>Name</th>
                                             <th>Email</th>
                                             <th>Role</th>
-                                            <th>Actions</th>
                                             <th scope="col" />
                                         </tr>
                                     </thead>
@@ -134,7 +133,6 @@ class UsersList extends Component {
                                                                     className="btn-icon-only text-light"
                                                                     role="button"
                                                                     size="sm"
-                                                                    color=""
                                                                 >
                                                                     <i className="fas fa-ellipsis-v" />
                                                                 </DropdownToggle>
