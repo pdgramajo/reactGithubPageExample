@@ -1,6 +1,4 @@
-import Axios from "axios";
-import { API } from '../config';
-import Authentication from '../lib/Authentication';
+import Api from '../lib/Api';
 
 export default {
     state: {
@@ -39,55 +37,70 @@ export default {
         async getAllRolesAsync(page) {
             try {
                 dispatch.loader.isLoading(true);
-                const pageNumber = page ? page : 1;
-                const response = await Axios.get(`${API.BaseURL}/Roles?PageNumber=${pageNumber}&PageSize=4`, { headers: { Authorization: Authentication.bearerToken() } })
+
+                const params = {
+                    PageNumber: page ? page : 1,
+                    PageSize: 4
+                }
+                const response = await Api.get('Roles', params);
+
                 dispatch.role.pagination(JSON.parse(response.headers['x-pagination']));
                 dispatch.role.getAllRoles(response.data);
-                dispatch.loader.isLoading(false);
                 return Promise.resolve(response.data);
             } catch (error) {
                 return Promise.reject(new Error('Error fetching data.'));
+            }
+            finally {
+                dispatch.loader.isLoading(false);
             }
         },
         async getAllRolesForSelectAsync() {
             try {
                 dispatch.loader.isLoading(true);
-                const response = await Axios.get(`${API.BaseURL}/Roles`, { headers: { Authorization: Authentication.bearerToken() } })
+                const response = await Api.get('Roles');
                 dispatch.role.getAllRolesForSelect(response.data);
-                dispatch.loader.isLoading(false);
                 return Promise.resolve(response.data);
             } catch (error) {
                 return Promise.reject(new Error('Error fetching data.'));
+            }
+            finally {
+                dispatch.loader.isLoading(false);
             }
         },
         async getAllUsersByRoleIdAsync(roleId) {
             try {
                 dispatch.loader.isLoading(true);
-                const response = await Axios.get(`${API.BaseURL}/Roles/${roleId}/Users`, { headers: { Authorization: Authentication.bearerToken() } })
+                const response = await Api.get(`Roles/${roleId}/Users`)
                 dispatch.role.getAllUsersByRoleId(response.data);
-                dispatch.loader.isLoading(false);
                 return Promise.resolve(response.data);
             } catch (error) {
                 return Promise.reject(new Error('Error fetching data.'));
+            }
+            finally {
+                dispatch.loader.isLoading(false);
             }
         },
         async createRoleAsync(roleName) {
             try {
                 dispatch.loader.isLoading(true);
-                const response = await Axios.post(`${API.BaseURL}/Roles`, roleName, { headers: { Authorization: Authentication.bearerToken() } })
-                dispatch.loader.isLoading(false);
+                const response = await Api.post('Roles', roleName);
                 return Promise.resolve(response.data);
             } catch (error) {
                 return Promise.reject(new Error('Error adding role.'));
+            }
+            finally {
+                dispatch.loader.isLoading(false);
             }
         },
         async deleteRoleAsync(roleId) {
             try {
                 dispatch.loader.isLoading(true);
-                await Axios.delete(`${API.BaseURL}/Roles/${roleId}`, { headers: { Authorization: Authentication.bearerToken() } })
-                dispatch.loader.isLoading(false);
+                await Api.delete(`Roles/${roleId}`);
             } catch (error) {
                 return Promise.reject(new Error('Error deleting role.' + error.message));
+            }
+            finally {
+                dispatch.loader.isLoading(false);
             }
         }
     }),

@@ -33,10 +33,7 @@ class Root extends Component {
         const { model: { isLoading } } = this.props;
         return (
             <>
-                {
-                    isLoading &&
-                    <Loading />
-                }
+                {isLoading && <Loading />}
                 {this.getRoutesComponents()}
             </>
         )

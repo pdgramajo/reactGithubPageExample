@@ -1,6 +1,5 @@
-import Axios from 'axios';
-import { API } from '../config';
 import Authentication from '../lib/Authentication';
+import Api from '../lib/Api';
 
 const user = {
   state: {
@@ -53,20 +52,18 @@ const user = {
   },
   effects: dispatch => ({
     async loginAsync({ email, password, token }) {
-      dispatch.user.setLoading(true);
+      dispatch.loader.isLoading(true);
       try {
         let userToken;
         if (token) {
           userToken = token;
         } else {
-          const response = await Axios.post(`${API.BaseURL}/Accounts/Login`, { email, password });
-
+          const response = await Api.post('Accounts/Login', { email, password })
           userToken = response.data.token;
         }
 
         Authentication.setJWTCookie(userToken);
         dispatch.user.add(Authentication.getUser());
-        dispatch.user.setLoading(false);
         return Promise.resolve();
       } catch (error) {
         if (error.response && error.response.status === 401) {
@@ -79,8 +76,10 @@ const user = {
 
         return Promise.reject(new Error('Network error'));
       }
+      finally {
+        dispatch.loader.isLoading(false);
+      }
     },
-
     logout() {
       Authentication.deleteJwt();
 
@@ -89,58 +88,74 @@ const user = {
     async createUserAsync(userData) {
       try {
         dispatch.loader.isLoading(true);
-        const response = await Axios.post(`${API.BaseURL}/Accounts/Create`, userData, { headers: { Authorization: Authentication.bearerToken() } })
-        dispatch.loader.isLoading(false);
+        const response = await Api.post('Accounts/Create', userData);
         return Promise.resolve(response.data);
       } catch (error) {
         return Promise.reject(new Error('Error adding Files.'));
+      }
+      finally {
+        dispatch.loader.isLoading(false);
       }
     },
     async updateUserAsync(data) {
       try {
         dispatch.loader.isLoading(true);
-        const response = await Axios.put(`${API.BaseURL}/Users/${data.userId}`, data.user, { headers: { Authorization: Authentication.bearerToken() } })
-        dispatch.loader.isLoading(false);
+        const response = await Api.put(`Users/${data.userId}`, data.user);
         return Promise.resolve(response.data);
       } catch (error) {
         return Promise.reject(new Error('Error adding Files.'));
+      }
+      finally {
+        dispatch.loader.isLoading(false);
       }
     },
     async getAllUsersAsync(page) {
       try {
         dispatch.loader.isLoading(true);
-        const pageNumber = page ? page : 1;
-        const response = await Axios.get(`${API.BaseURL}/Users?PageNumber=${pageNumber}&PageSize=4`, { headers: { Authorization: Authentication.bearerToken() } });
+
+        const params = {
+          PageNumber: page ? page : 1,
+          PageSize: 4
+        }
+
+        const response = await Api.get('Users', params);
+
         dispatch.user.pagination(JSON.parse(response.headers['x-pagination']));
         dispatch.user.getAllUsers(response.data);
-        dispatch.loader.isLoading(false);
 
         return Promise.resolve(response.data);
       } catch (error) {
         return Promise.reject(new Error('Error fetching data.'));
       }
+      finally {
+        dispatch.loader.isLoading(false);
+      }
+
     },
     async getUserByIdAsync(userId) {
       try {
         dispatch.loader.isLoading(true);
-        const response = await Axios.get(`${API.BaseURL}/Users/${userId}`, { headers: { Authorization: Authentication.bearerToken() } })
+        const response = await Api.get(`Users/${userId}`)
         dispatch.user.getUserById(response.data);
-        dispatch.loader.isLoading(false);
         return Promise.resolve(response.data);
       } catch (error) {
         return Promise.reject(new Error('Error fetching data.'));
+      }
+      finally {
+        dispatch.loader.isLoading(false);
       }
     },
     async deleteUserAsync(UserId) {
       try {
         dispatch.loader.isLoading(true);
-        await Axios.delete(`${API.BaseURL}/Users/${UserId}`, { headers: { Authorization: Authentication.bearerToken() } })
-        dispatch.loader.isLoading(false);
+        await Api.delete(`Users/${UserId}`);
       } catch (error) {
-        return Promise.reject(new Error('Error adding Files.' + error.message));
+        return Promise.reject(new Error('Error deleting.' + error));
+      }
+      finally {
+        dispatch.loader.isLoading(false);
       }
     }
-
   }),
 };
 
