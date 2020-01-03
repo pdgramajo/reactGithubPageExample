@@ -40,7 +40,7 @@ class NewUser extends Component {
 
         createUserAsync(dataToSave)
             .then(() => {
-                history.push('/users')
+                history.push('/private/users')
             })
             .catch(error => this.setState({ showError: true, error: error.message }));
     }

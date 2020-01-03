@@ -46,7 +46,7 @@ class EditUser extends Component {
 
         updateUserAsync({ userId: id, user: userData })
             .then(() => {
-                history.push('/users')
+                history.push('/private/users')
             })
             .catch(error => this.setState({ showError: true, error: error.message }));
     }

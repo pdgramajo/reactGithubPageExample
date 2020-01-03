@@ -63,7 +63,7 @@ class UserForm extends Component {
         const { btnSave, isEditing } = this.props;
         const { user: { email, password, file, phoneNumber, roleName }, avatarIdToDelete,
         } = this.state;
-
+        
         let userData = {};
         if (!isEditing) {
             userData = {
@@ -95,7 +95,6 @@ class UserForm extends Component {
 
     onValidateSubmit = async (e) => {
         e.preventDefault();
-
         const {
             user: { email, password, roleName, confirmPassword }
         } = this.state;
@@ -118,9 +117,13 @@ class UserForm extends Component {
         const {
             validation: { emailIsValid, passwordIsValid, roleIsSelected, confirmPasswordIsValid }
         } = this.state;
+        const { isEditing } = this.props;
 
         if (emailIsValid === true && passwordIsValid === true &&
             confirmPasswordIsValid === true && roleIsSelected === true) {
+            this.onSubmit();
+        }
+        if (isEditing) {
             this.onSubmit();
         }
     }
