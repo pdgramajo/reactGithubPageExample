@@ -1,12 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import {
-    Container,
-    Row,
-    Col,
-    Spinner
-} from "reactstrap";
+import { Container, Row, Col, Spinner } from 'reactstrap';
 import UserForm from '../../../components/user/UserForm';
 import Header from '../../../components/Headers/Header'
 
@@ -58,11 +53,11 @@ class EditUser extends Component {
             <>
                 <Header />
                 {/* Page content */}
-                <Container className="mt--7" fluid>
+                <Container className='mt--7' fluid>
                     <Row>
-                        <Col className="order-xl-1" xl="12">
+                        <Col className='order-xl-1' xl='12'>
                             {isLoading ?
-                                <Spinner color="primary" /> :
+                                <Spinner color='primary' /> :
                                 <UserForm roles={roles} user={userFound} actions={actions} isEditing btnSave={this.updateUser} />
                             }
                         </Col>

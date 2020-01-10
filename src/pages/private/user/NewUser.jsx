@@ -1,19 +1,13 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import {
-    Container,
-    Row,
-    Col
-  } from "reactstrap";
+import { Container, Row, Col } from 'reactstrap';
 import UserForm from '../../../components/user/UserForm';
 import Header from '../../../components/Headers/Header'
 
 
 class NewUser extends Component {
-    state = {
 
-    }
     async componentDidMount() {
         const { actions: { getAllRolesForSelectAsync } } = this.props;
         getAllRolesForSelectAsync();
@@ -24,9 +18,7 @@ class NewUser extends Component {
 
         let filepath = '';
         if (data.file !== '') {
-
-            let fileResponse = await addFileAsync(data.file);
-
+            const fileResponse = await addFileAsync(data.file);
             filepath = fileResponse.relativePath;
         }
 
@@ -49,17 +41,17 @@ class NewUser extends Component {
         const { roles, actions } = this.props;
         return (
             <>
-              <Header />
-              {/* Page content */}
-              <Container className="mt--7" fluid>
-                <Row>
-                 <Col className="order-xl-1" xl="12">
-                  <UserForm roles={roles} actions={actions} btnSave={this.createUser} />
-                  </Col>
-                </Row>
-              </Container>
+                <Header />
+                {/* Page content */}
+                <Container className='mt--7' fluid>
+                    <Row>
+                        <Col className='order-xl-1' xl='12'>
+                            <UserForm roles={roles} actions={actions} btnSave={this.createUser} />
+                        </Col>
+                    </Row>
+                </Container>
             </>
-          );
+        );
     }
 }
 

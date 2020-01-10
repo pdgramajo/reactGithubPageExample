@@ -1,16 +1,9 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 import {
-    Button, Card,
-    CardHeader,
-    CardBody,
-    FormGroup,
-    Form,
-    Input,
-    Row,
-    Col,
-    FormFeedback,
-} from "reactstrap";
-
+    Button, Card, CardHeader, CardBody,
+    FormGroup, Form, Input, Row,
+    Col, FormFeedback,
+} from 'reactstrap';
 import Helpers from '../../lib/Helpers';
 import ImageItem from '../common/ImageItem';
 
@@ -63,7 +56,7 @@ class UserForm extends Component {
         const { btnSave, isEditing } = this.props;
         const { user: { email, password, file, phoneNumber, roleName }, avatarIdToDelete,
         } = this.state;
-        
+
         let userData = {};
         if (!isEditing) {
             userData = {
@@ -129,8 +122,7 @@ class UserForm extends Component {
     }
 
     onEmailChange = e => {
-        let data = e.target.value;
-        console.log(data);
+        const data = e.target.value;
         this.setState(prevState => ({
             user: {
                 ...prevState.user,
@@ -144,7 +136,7 @@ class UserForm extends Component {
     }
 
     onPasswordChange = e => {
-        let data = e.target.value;
+        const data = e.target.value;
         this.setState(prevState => ({
             user: {
                 ...prevState.user,
@@ -158,7 +150,7 @@ class UserForm extends Component {
     }
 
     onConfirmPasswordChange = (e) => {
-        let data = e.target.value;
+        const data = e.target.value;
         const {
             user: { password }
         } = this.state;
@@ -175,7 +167,7 @@ class UserForm extends Component {
     }
 
     onPhoneNumberChange = e => {
-        let data = e.target.value;
+        const data = e.target.value;
         this.setState(prevState => ({
             user: {
                 ...prevState.user,
@@ -186,7 +178,7 @@ class UserForm extends Component {
     }
 
     onFileChange = (e) => {
-        let file = e.target.files[0];
+        const file = e.target.files[0];
         let data = new FormData();
         data.append('file', file);
         this.setState(prevState => ({
@@ -198,7 +190,7 @@ class UserForm extends Component {
     }
 
     onRolesChange = e => {
-        let data = e.target.value;
+        const data = e.target.value;
         this.setState(prevState => ({
             user: {
                 ...prevState.user,
@@ -212,7 +204,6 @@ class UserForm extends Component {
     }
 
     render() {
-
         const {
             user: { email, roleName, password, phoneNumber, avatarUrl },
             validation: { emailIsValid, passwordIsValid, confirmPasswordIsValid, roleIsSelected },
@@ -221,20 +212,17 @@ class UserForm extends Component {
         const { roles, isEditing } = this.props;
 
         return (
-            <Card className="bg-secondary shadow">
-                <CardHeader className="bg-white border-0">
-                    <Row className="align-items-center">
-                        <Col xs="8">
-                            <h3 className="mb-0">
-                                {
-                                    isEditing ? 'Edit User' : 'Create User'
-                                }
+            <Card className='bg-secondary shadow'>
+                <CardHeader className='bg-white border-0'>
+                    <Row className='align-items-center'>
+                        <Col xs='8'>
+                            <h3 className='mb-0'>
+                                {isEditing ? 'Edit User' : 'Create User'}
                             </h3>
                         </Col>
-                        <Col className="text-right" xs="4">
+                        <Col className='text-right' xs='4'>
                             <Button
-                                color="default"
-
+                                color='default'
                                 onClick={this.onValidateSubmit}
                             >
                                 Save
@@ -244,42 +232,42 @@ class UserForm extends Component {
                 </CardHeader>
                 <CardBody>
                     <Form>
-                        <h6 className="heading-small text-muted mb-4">
+                        <h6 className='heading-small text-muted mb-4'>
                             User information
                         </h6>
-                        <div className="pl-lg-4">
+                        <div className='pl-lg-4'>
                             <Row>
-                                <Col lg="6">
+                                <Col lg='6'>
                                     <FormGroup>
                                         <label
-                                            className="form-control-label"
-                                            htmlFor="input-username"
+                                            className='form-control-label'
+                                            htmlFor='input-username'
                                         >
                                             Username
-                                </label>
+                                         </label>
                                         <Input
-                                            id="input-username"
-                                            placeholder="Username"
-                                            type="text"
+                                            id='input-username'
+                                            placeholder='Username'
+                                            type='text'
                                             disabled
                                         />
                                     </FormGroup>
                                 </Col>
-                                <Col lg="6">
+                                <Col lg='6'>
                                     <FormGroup>
                                         <label
-                                            className="form-control-label"
-                                            htmlFor="input-email"
+                                            className='form-control-label'
+                                            htmlFor='input-email'
                                         >
                                             Email address
                                 </label>
                                         <Input
-                                            id="input-email"
-                                            placeholder="example@example.com"
+                                            id='input-email'
+                                            placeholder='example@example.com'
                                             onChange={this.onEmailChange}
                                             value={email || ''}
                                             invalid={!emailIsValid}
-                                            type="text"
+                                            type='text'
                                         />
                                         <FormFeedback>Email is required</FormFeedback>
                                     </FormGroup>
@@ -288,22 +276,22 @@ class UserForm extends Component {
                             {
                                 !isEditing &&
                                 <Row>
-                                    <Col lg="6">
+                                    <Col lg='6'>
                                         <FormGroup>
                                             <label
-                                                className="form-control-label"
-                                                htmlFor="input-password"
+                                                className='form-control-label'
+                                                htmlFor='input-password'
                                             >
                                                 Password
                                     </label>
                                             <Input
-                                                id="input-password"
-                                                name="password"
-                                                placeholder="Write your password"
+                                                id='input-password'
+                                                name='password'
+                                                placeholder='Write your password'
                                                 onChange={this.onPasswordChange}
                                                 value={password || ''}
                                                 invalid={!passwordIsValid}
-                                                type="password"
+                                                type='password'
                                             />
                                             <FormFeedback>
                                                 Passwords must:
@@ -317,19 +305,19 @@ class UserForm extends Component {
                                             </FormFeedback>
                                         </FormGroup>
                                     </Col>
-                                    <Col lg="6">
+                                    <Col lg='6'>
                                         <FormGroup>
                                             <label
-                                                className="form-control-label"
-                                                htmlFor="input-last-name"
+                                                className='form-control-label'
+                                                htmlFor='input-last-name'
                                             >
                                                 Confirm Password
                                     </label>
                                             <Input
-                                                name="confirmPassword"
-                                                id="input-confirm-password"
-                                                placeholder="Confirm your password"
-                                                type="password"
+                                                name='confirmPassword'
+                                                id='input-confirm-password'
+                                                placeholder='Confirm your password'
+                                                type='password'
                                                 onChange={this.onConfirmPasswordChange}
                                                 invalid={!confirmPasswordIsValid}
                                             />
@@ -339,29 +327,29 @@ class UserForm extends Component {
                                 </Row>
                             }
                         </div>
-                        <hr className="my-4" />
+                        <hr className='my-4' />
                         {/* Address */}
-                        <h6 className="heading-small text-muted mb-4">
+                        <h6 className='heading-small text-muted mb-4'>
                             Extra information
                         </h6>
-                        <div className="pl-lg-4">
+                        <div className='pl-lg-4'>
                             <Row>
-                                <Col lg="6">
+                                <Col lg='6'>
                                     <FormGroup>
                                         <label
-                                            className="form-control-label"
-                                            htmlFor="input-role"
+                                            className='form-control-label'
+                                            htmlFor='input-role'
                                         >
                                             Role
                                 </label>
                                         <Input
-                                            id="input-role"
-                                            type="select"
+                                            id='input-role'
+                                            type='select'
                                             onChange={this.onRolesChange}
                                             value={roleName || ''}
                                             invalid={!roleIsSelected}
                                         >
-                                            <option value="" key="0" disabled>{"Select a role"}</option>
+                                            <option value='' key='0' disabled>{'Select a role'}</option>
                                             {
                                                 roles &&
                                                 (
@@ -372,31 +360,31 @@ class UserForm extends Component {
                                         <FormFeedback>Role is required</FormFeedback>
                                     </FormGroup>
                                 </Col>
-                                <Col lg="6">
+                                <Col lg='6'>
                                     <FormGroup>
                                         <label
-                                            className="form-control-label"
-                                            htmlFor="input-phone"
+                                            className='form-control-label'
+                                            htmlFor='input-phone'
                                         >
                                             Phone Number
                                 </label>
                                         <Input
-                                            id="input-phone"
-                                            placeholder="Write your phone number"
+                                            id='input-phone'
+                                            placeholder='Write your phone number'
                                             onChange={this.onPhoneNumberChange}
                                             value={phoneNumber || ''}
-                                            type="text"
+                                            type='text'
                                         />
                                     </FormGroup>
                                 </Col>
                             </Row>
                             <Row>
-                                <Col md="6">
+                                <Col md='6'>
 
                                     <FormGroup>
                                         <label
-                                            className="form-control-label"
-                                            htmlFor="input-img"
+                                            className='form-control-label'
+                                            htmlFor='input-img'
                                         >
                                             Avatar
                                         </label>
@@ -408,9 +396,9 @@ class UserForm extends Component {
                                                 />
                                                 :
                                                 <Input
-                                                    name="file"
-                                                    id="input-img"
-                                                    type="file"
+                                                    name='file'
+                                                    id='input-img'
+                                                    type='file'
                                                     onChange={this.onFileChange}
                                                 />
                                         }
@@ -418,17 +406,17 @@ class UserForm extends Component {
                                 </Col>
                             </Row>
                         </div>
-                        <hr className="my-4" />
+                        <hr className='my-4' />
                         {/* Description */}
-                        <h6 className="heading-small text-muted mb-4">About me</h6>
-                        <div className="pl-lg-4">
+                        <h6 className='heading-small text-muted mb-4'>About me</h6>
+                        <div className='pl-lg-4'>
                             <FormGroup>
                                 <label>About Me</label>
                                 <Input
-                                    placeholder="A few words about you ..."
-                                    rows="4"
-                                    defaultValue="A beautiful Dashboard for Bootstrap 4. It is Free and Open Source."
-                                    type="textarea"
+                                    placeholder='A few words about you ...'
+                                    rows='4'
+                                    defaultValue='A beautiful Dashboard for Bootstrap 4. It is Free and Open Source.'
+                                    type='textarea'
                                 />
                             </FormGroup>
                         </div>

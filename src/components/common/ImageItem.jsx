@@ -7,14 +7,11 @@ import Helpers from '../../lib/Helpers';
 
 const ImageItem = ({ imageURL, handlerDelete, disabled }) => {
 
-    console.log('disabled', disabled)
     const [tooltipOpen, setTooltipOpen] = useState(false);
     const toggle = () => setTooltipOpen(!tooltipOpen);
 
     const onDismiss = () => {
-
-        let array = imageURL.split('/');
-
+        const array = imageURL.split('/');
         handlerDelete(array[array.length - 1]);
     }
 
@@ -22,24 +19,23 @@ const ImageItem = ({ imageURL, handlerDelete, disabled }) => {
         <Card>
             {
                 !disabled &&
-
                 <div style={{ position: 'absolute', right: 0 }}>
                     <button
-                        type="button"
-                        className="close"
-                        aria-label="Close"
+                        type='button'
+                        className='close'
+                        aria-label='Close'
                         onClick={onDismiss}
                         id={`tooltipId${md5(imageURL)}`}
                     >
                         <span
                             style={{ margin: 10, fontSize: 29 }}
-                            aria-hidden="true"
+                            aria-hidden='true'
                         >
                             ×
                     </span>
                     </button>
                     <Tooltip
-                        placement="right"
+                        placement='right'
                         isOpen={tooltipOpen}
                         target={`tooltipId${md5(imageURL)}`}
                         toggle={toggle}
@@ -48,10 +44,10 @@ const ImageItem = ({ imageURL, handlerDelete, disabled }) => {
                 </Tooltip>
                 </div>
             }
-            <div className="card-item-image">
+            <div className='card-item-image'>
                 <img
                     alt={imageURL}
-                    className="rounded-circle"
+                    className='rounded-circle'
                     src={Helpers.getImageUrl(imageURL)}
                 />
             </div>

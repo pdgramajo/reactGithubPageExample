@@ -1,22 +1,12 @@
-import React from "react";
+import React from 'react';
 import { connect } from 'react-redux';
 // reactstrap components
 import {
-  Button,
-  Card,
-  CardHeader,
-  CardBody,
-  FormGroup,
-  Form,
-  Input,
-  InputGroupAddon,
-  InputGroupText,
-  InputGroup,
-  Row,
-  Col,
-  Spinner,
-  Alert,
-} from "reactstrap";
+  Button, Card, CardHeader, CardBody,
+  FormGroup, Form, Input, InputGroupAddon,
+  InputGroupText, InputGroup, Row, Col,
+  Spinner, Alert,
+} from 'reactstrap';
 
 class Login extends React.Component {
   state = {
@@ -58,79 +48,79 @@ class Login extends React.Component {
     const { loading } = this.props;
     return (
       <>
-        <Col lg="5" md="7">
-          <Card className="bg-secondary shadow border-0">
+        <Col lg='5' md='7'>
+          <Card className='bg-secondary shadow border-0'>
             {
               showError &&
-              <CardHeader className="bg-transparent pb-5">
-                <div className="btn-wrapper text-center">
-                  <Alert color="danger" isOpen={showError} toggle={this.closeError}>{error}</Alert>
+              <CardHeader className='bg-transparent pb-5'>
+                <div className='btn-wrapper text-center'>
+                  <Alert color='danger' isOpen={showError} toggle={this.closeError}>{error}</Alert>
                 </div>
               </CardHeader>
             }
-            <CardBody className="px-lg-5 py-lg-5">
-              <div className="text-center text-muted mb-4">
+            <CardBody className='px-lg-5 py-lg-5'>
+              <div className='text-center text-muted mb-4'>
                 <small>sign in with credentials</small>
               </div>
-              <Form role="form" onSubmit={this.onSubmit}>
-                <FormGroup className="mb-3">
-                  <InputGroup className="input-group-alternative">
-                    <InputGroupAddon addonType="prepend">
+              <Form role='form' onSubmit={this.onSubmit}>
+                <FormGroup className='mb-3'>
+                  <InputGroup className='input-group-alternative'>
+                    <InputGroupAddon addonType='prepend'>
                       <InputGroupText>
-                        <i className="ni ni-email-83" />
+                        <i className='ni ni-email-83' />
                       </InputGroupText>
                     </InputGroupAddon>
-                    <Input value={email} onChange={this.onEmailChange} type="email" placeholder="Email" />
+                    <Input value={email} onChange={this.onEmailChange} type='email' placeholder='Email' />
                   </InputGroup>
                 </FormGroup>
                 <FormGroup>
-                  <InputGroup className="input-group-alternative">
-                    <InputGroupAddon addonType="prepend">
+                  <InputGroup className='input-group-alternative'>
+                    <InputGroupAddon addonType='prepend'>
                       <InputGroupText>
-                        <i className="ni ni-lock-circle-open" />
+                        <i className='ni ni-lock-circle-open' />
                       </InputGroupText>
                     </InputGroupAddon>
-                    <Input value={password} onChange={this.onPasswordChange} type="password" placeholder="Password" />
+                    <Input value={password} onChange={this.onPasswordChange} type='password' placeholder='Password' />
                   </InputGroup>
                 </FormGroup>
-                <div className="custom-control custom-control-alternative custom-checkbox">
+                <div className='custom-control custom-control-alternative custom-checkbox'>
                   <input
-                    className="custom-control-input"
-                    id=" customCheckLogin"
-                    type="checkbox"
+                    className='custom-control-input'
+                    id=' customCheckLogin'
+                    type='checkbox'
                   />
                   <label
-                    className="custom-control-label"
-                    htmlFor=" customCheckLogin"
+                    className='custom-control-label'
+                    htmlFor=' customCheckLogin'
                   >
-                    <span className="text-muted">Remember me</span>
+                    <span className='text-muted'>Remember me</span>
                   </label>
                 </div>
-                <div className="text-center">
+                <div className='text-center'>
                   {
                     loading ?
                       <Spinner style={{ width: '3rem', height: '3rem' }} />
                       :
-                      <Button type="submit" color="primary" className="my-4"> Sign in</Button>
+                      <Button type='submit' color='primary' className='my-4'> Sign in</Button>
                   }
                 </div>
               </Form>
             </CardBody>
           </Card>
-          <Row className="mt-3">
-            <Col xs="6">
+          <Row className='mt-3'>
+            <Col xs='6'>
               <a
-                className="text-light"
-                href="#pablo"
+                className='text-light'
+                href='#pablo'
                 onClick={e => e.preventDefault()}
               >
                 <small>Forgot password?</small>
               </a>
             </Col>
-            <Col className="text-right" xs="6">
+            <Col className='text-right' xs='6'>
               <a
-                className="text-light"
-                href="#pablo"
+                className='text-light'
+                href='#pablo'
                 onClick={e => e.preventDefault()}
               >
                 <small>Create new account</small>

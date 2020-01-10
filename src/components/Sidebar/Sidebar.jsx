@@ -1,14 +1,15 @@
-import React from "react";
-import { NavLink as NavLinkRRD, Link } from "react-router-dom";
+import React from 'react';
+import { NavLink as NavLinkRRD, Link } from 'react-router-dom';
 // nodejs library to set properties for components
-import { PropTypes } from "prop-types";
-
+import { PropTypes } from 'prop-types';
 // reactstrap components
 import {
-  Collapse, DropdownMenu, DropdownItem, UncontrolledDropdown, DropdownToggle, Form, Input,
-  InputGroupAddon, InputGroupText, InputGroup, Media, NavbarBrand, Navbar, NavItem,
-  NavLink, Nav, Container, Row, Col
-} from "reactstrap";
+  Collapse, DropdownMenu, DropdownItem, UncontrolledDropdown,
+  DropdownToggle, Form, Input, InputGroupAddon,
+  InputGroupText, InputGroup, Media, NavbarBrand,
+  Navbar, NavItem, NavLink, Nav,
+  Container, Row, Col
+} from 'reactstrap';
 import Helpers from '../../lib/Helpers';
 
 class Sidebar extends React.Component {
@@ -51,7 +52,7 @@ class Sidebar extends React.Component {
             to={route.layout + route.path}
             tag={NavLinkRRD}
             onClick={this.closeCollapse}
-            activeClassName="active"
+            activeClassName='active'
           >
             <i className={route.icon} />
             {route.name}
@@ -71,70 +72,70 @@ class Sidebar extends React.Component {
     } else if (logoNavBrand && logoNavBrand.outterLink) {
       navbarBrandProps = {
         href: logoNavBrand.outterLink,
-        target: "_blank"
+        target: '_blank'
       };
     }
     return (
       <Navbar
-        className="navbar-vertical fixed-left navbar-light bg-white"
-        expand="md"
-        id="sidenav-main"
+        className='navbar-vertical fixed-left navbar-light bg-white'
+        expand='md'
+        id='sidenav-main'
       >
         <Container fluid>
           {/* Toggler */}
           <button
-            className="navbar-toggler"
-            type="button"
+            className='navbar-toggler'
+            type='button'
             onClick={this.toggleCollapse}
           >
-            <span className="navbar-toggler-icon" />
+            <span className='navbar-toggler-icon' />
           </button>
           {/* Brand */}
           {logoNavBrand ? (
-            <NavbarBrand className="pt-0" {...navbarBrandProps}>
+            <NavbarBrand className='pt-0' {...navbarBrandProps}>
               <img
                 alt={logoNavBrand.imgAlt}
-                className="navbar-brand-img"
+                className='navbar-brand-img'
                 src={logoNavBrand.imgSrc}
               />
             </NavbarBrand>
           ) : null}
           {/* User */}
-          <Nav className="align-items-center d-md-none">
+          <Nav className='align-items-center d-md-none'>
             <UncontrolledDropdown nav>
               <DropdownToggle nav>
-                <Media className="align-items-center">
-                  <span className="avatar avatar-sm rounded-circle">
+                <Media className='align-items-center'>
+                  <span className='avatar avatar-sm rounded-circle'>
                     <img
-                      alt="..."
+                      alt='...'
                       src={Helpers.getImageUrl(user.avatarURL)}
                     />
                   </span>
                 </Media>
               </DropdownToggle>
-              <DropdownMenu className="dropdown-menu-arrow" right>
-                <DropdownItem className="noti-title" header tag="div">
-                  <h6 className="text-overflow m-0">Welcome!</h6>
+              <DropdownMenu className='dropdown-menu-arrow' right>
+                <DropdownItem className='noti-title' header tag='div'>
+                  <h6 className='text-overflow m-0'>Welcome!</h6>
                 </DropdownItem>
-                <DropdownItem to="/private/user-profile" tag={Link}>
-                  <i className="ni ni-single-02" />
+                <DropdownItem to='/private/user-profile' tag={Link}>
+                  <i className='ni ni-single-02' />
                   <span>My profile</span>
                 </DropdownItem>
-                <DropdownItem to="/private/user-profile" tag={Link}>
-                  <i className="ni ni-settings-gear-65" />
+                <DropdownItem to='/private/user-profile' tag={Link}>
+                  <i className='ni ni-settings-gear-65' />
                   <span>Settings</span>
                 </DropdownItem>
-                <DropdownItem to="/private/user-profile" tag={Link}>
-                  <i className="ni ni-calendar-grid-58" />
+                <DropdownItem to='/private/user-profile' tag={Link}>
+                  <i className='ni ni-calendar-grid-58' />
                   <span>Activity</span>
                 </DropdownItem>
-                <DropdownItem to="/private/user-profile" tag={Link}>
-                  <i className="ni ni-support-16" />
+                <DropdownItem to='/private/user-profile' tag={Link}>
+                  <i className='ni ni-support-16' />
                   <span>Support</span>
                 </DropdownItem>
                 <DropdownItem divider />
-                <DropdownItem href="#pablo" onClick={e => { e.preventDefault(); this.prevLogout() }}>
-                  <i className="ni ni-user-run" />
+                <DropdownItem href='#pablo' onClick={e => { e.preventDefault(); this.prevLogout() }}>
+                  <i className='ni ni-user-run' />
                   <span>Logout</span>
                 </DropdownItem>
               </DropdownMenu>
@@ -143,10 +144,10 @@ class Sidebar extends React.Component {
           {/* Collapse */}
           <Collapse navbar isOpen={this.state.collapseOpen}>
             {/* Collapse header */}
-            <div className="navbar-collapse-header d-md-none">
+            <div className='navbar-collapse-header d-md-none'>
               <Row>
                 {logoNavBrand ? (
-                  <Col className="collapse-brand" xs="6">
+                  <Col className='collapse-brand' xs='6'>
                     {logoNavBrand.innerLink ? (
                       <Link to={logoNavBrand.innerLink}>
                         <img alt={logoNavBrand.imgAlt} src={logoNavBrand.imgSrc} />
@@ -158,10 +159,10 @@ class Sidebar extends React.Component {
                       )}
                   </Col>
                 ) : null}
-                <Col className="collapse-close" xs="6">
+                <Col className='collapse-close' xs='6'>
                   <button
-                    className="navbar-toggler"
-                    type="button"
+                    className='navbar-toggler'
+                    type='button'
                     onClick={this.toggleCollapse}
                   >
                     <span />
@@ -171,17 +172,17 @@ class Sidebar extends React.Component {
               </Row>
             </div>
             {/* Form */}
-            <Form className="mt-4 mb-3 d-md-none">
-              <InputGroup className="input-group-rounded input-group-merge">
+            <Form className='mt-4 mb-3 d-md-none'>
+              <InputGroup className='input-group-rounded input-group-merge'>
                 <Input
-                  aria-label="Search"
-                  className="form-control-rounded form-control-prepended"
-                  placeholder="Search"
-                  type="search"
+                  aria-label='Search'
+                  className='form-control-rounded form-control-prepended'
+                  placeholder='Search'
+                  type='search'
                 />
-                <InputGroupAddon addonType="prepend">
+                <InputGroupAddon addonType='prepend'>
                   <InputGroupText>
-                    <span className="fa fa-search" />
+                    <span className='fa fa-search' />
                   </InputGroupText>
                 </InputGroupAddon>
               </InputGroup>
@@ -189,11 +190,11 @@ class Sidebar extends React.Component {
             {/* Navigation */}
             <Nav navbar>{this.getAllowedNavRoutes()}</Nav>
             {/* Divider */}
-            <hr className="my-3" />
+            <hr className='my-3' />
             {/* Heading */}
-            <h6 className="navbar-heading text-muted">Public pages</h6>
+            <h6 className='navbar-heading text-muted'>Public pages</h6>
             {/* Navigation */}
-            <Nav className="mb-md-3" navbar>
+            <Nav className='mb-md-3' navbar>
               {this.createLinks(routes.filter(route => route.type === 'public'))}
             </Nav>
           </Collapse>
@@ -213,10 +214,10 @@ Sidebar.propTypes = {
   logout: PropTypes.func,
   logoNavBrand: PropTypes.shape({
     // innerLink is for links that will direct the user within the app
-    // it will be rendered as <Link to="...">...</Link> tag
+    // it will be rendered as <Link to='...'>...</Link> tag
     innerLink: PropTypes.string,
     // outterLink is for links that will direct the user outside the app
-    // it will be rendered as simple <a href="...">...</a> tag
+    // it will be rendered as simple <a href='...'>...</a> tag
     outterLink: PropTypes.string,
     // the image src of the logo
     imgSrc: PropTypes.string.isRequired,
@@ -227,4 +228,3 @@ Sidebar.propTypes = {
 
 
 export default Sidebar;
-

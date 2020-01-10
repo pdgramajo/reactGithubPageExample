@@ -16,14 +16,14 @@ export default class Services extends Component {
     render() {
 
         return (
-            <Col lg="5" md="7">
+            <Col lg='5' md='7'>
                 <Jumbotron>
-                    <h1 className="display-3">Services page!</h1>
-                    <p className="lead"> Services page! This is a simple hero unit, a simple Jumbotron-style component for calling extra attention to featured content or information.</p>
-                    <hr className="my-2" />
+                    <h1 className='display-3'>Services page!</h1>
+                    <p className='lead'> Services page! This is a simple hero unit, a simple Jumbotron-style component for calling extra attention to featured content or information.</p>
+                    <hr className='my-2' />
                     <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
-                    <p className="lead">
-                        <Button color="primary">Learn More</Button>
+                    <p className='lead'>
+                        <Button color='primary'>Learn More</Button>
                     </p>
                 </Jumbotron>
             </Col>

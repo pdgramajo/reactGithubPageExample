@@ -1,11 +1,9 @@
 import React, { Component } from 'react';
-
-import { Route, Switch, Redirect } from "react-router-dom";
+import { Route, Switch, Redirect } from 'react-router-dom';
 import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
-
-import PrivateLayout from "./layouts/Private";
-import PublicLayout from "./layouts/Public";
+import PrivateLayout from './layouts/Private';
+import PublicLayout from './layouts/Public';
 import Loading from './components/common/Loading';
 
 class Root extends Component {
@@ -15,16 +13,16 @@ class Root extends Component {
         if (user) {
             return (
                 <Switch>
-                    <Route path="/private" render={props => <PrivateLayout {...props} />} />
-                    <Route path="/public" render={props => <PublicLayout {...props} />} />
-                    <Redirect from="/" to="/private/dashboard" />
+                    <Route path='/private' render={props => <PrivateLayout {...props} />} />
+                    <Route path='/public' render={props => <PublicLayout {...props} />} />
+                    <Redirect from='/' to='/private/dashboard' />
                 </Switch>
             )
         }
         return (
             <Switch>
-                <Route path="/public" render={props => <PublicLayout {...props} />} />
-                <Redirect from="/" to="/public/about" />
+                <Route path='/public' render={props => <PublicLayout {...props} />} />
+                <Redirect from='/' to='/public/about' />
             </Switch>
         )
     }
@@ -59,4 +57,3 @@ const mapDispatchToProps = ({
 export default withRouter(
     connect(mapStateToProps, mapDispatchToProps)(Root),
 );
-

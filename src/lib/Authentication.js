@@ -21,8 +21,7 @@ export default class Authentication {
   }
 
   static getJwt() {
-    var x = Cookies.get(Auth.JWTKey);
-    return x;
+    return Cookies.get(Auth.JWTKey);
   }
 
   static bearerToken() {
