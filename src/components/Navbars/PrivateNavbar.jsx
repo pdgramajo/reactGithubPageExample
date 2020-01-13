@@ -10,7 +10,6 @@ import {
 import Helpers from '../../lib/Helpers';
 
 const PrivateNavbar = ({ user, logout, brandText }) => {
-
   return (
     <Navbar className='navbar-top navbar-dark' expand='md' id='navbar-main'>
       <Container fluid>
@@ -53,21 +52,9 @@ const PrivateNavbar = ({ user, logout, brandText }) => {
               <DropdownItem className='noti-title' header tag='div'>
                 <h6 className='text-overflow m-0'>Welcome!</h6>
               </DropdownItem>
-              <DropdownItem to='/private/user-profile' tag={Link}>
+              <DropdownItem to={`/private/users/${user.userId}/details`} tag={Link}>
                 <i className='ni ni-single-02' />
                 <span>My profile</span>
-              </DropdownItem>
-              <DropdownItem to='/private/user-profile' tag={Link}>
-                <i className='ni ni-settings-gear-65' />
-                <span>Settings</span>
-              </DropdownItem>
-              <DropdownItem to='/private/user-profile' tag={Link}>
-                <i className='ni ni-calendar-grid-58' />
-                <span>Activity</span>
-              </DropdownItem>
-              <DropdownItem to='/private/user-profile' tag={Link}>
-                <i className='ni ni-support-16' />
-                <span>Support</span>
               </DropdownItem>
               <DropdownItem divider />
               <DropdownItem href='#pablo' onClick={logout}>

@@ -39,18 +39,17 @@ class Private extends React.Component {
       }
     });
   };
-  getBrandText = path => {
-    for (let i = 0; i < routes.length; i++) {
-      if (
-        this.props.location.pathname.indexOf(
-          routes[i].layout + routes[i].path
-        ) !== -1
-      ) {
-        return routes[i].name;
+
+  getBrandText = () => {
+    const currentRoute = routes.find(route => {
+      if (this.props.location.pathname.includes(`${route.layout}${route.path}`)) {
+        return true;
       }
-    }
-    return 'Brand';
+      return false;
+    })
+    return currentRoute.name ?? 'Brand';
   };
+
   render() {
     const { model: { user }, actions: { logout } } = this.props;
     return (
@@ -69,7 +68,7 @@ class Private extends React.Component {
           <PrivateNavbar
             user={user}
             logout={logout}
-            brandText={this.getBrandText(this.props.location.pathname)}
+            brandText={this.getBrandText()}
           />
           <Switch>
             {this.getRoutes(privateRoutes)}

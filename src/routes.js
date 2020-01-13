@@ -14,6 +14,7 @@ import Icons from './pages/private/Icons';
 import UserList from './pages/private/user/UserList';
 import NewUser from './pages/private/user/NewUser';
 import EditUser from './pages/private/user/EditUser';
+import UserDetails from './pages/private/user/UserDetails';
 import RoleList from './pages/private/role/RoleList';
 
 import Register from './pages/public/Register';
@@ -94,6 +95,16 @@ var routes = [
     name: 'Edit User',
     icon: 'ni ni-bullet-list-67 text-red',
     component: EditUser,
+    layout: '/private',
+    type: 'private',
+    showInNavBar: false,
+    allowedRoles: ['Manager', 'Admin']
+  },
+  {
+    path: '/users/:id/details',
+    name: '',
+    icon: '',
+    component: UserDetails,
     layout: '/private',
     type: 'private',
     showInNavBar: false,
